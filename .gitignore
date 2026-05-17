@@ -32,3 +32,7 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
+
+# Internal docs + design skill (kept local only)
+Docs/
+Fantasy_Design_Skill/

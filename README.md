@@ -9,7 +9,7 @@ A web-based personality quiz that maps real-life behavior to a Dungeons & Dragon
 - Picks a primary class, optionally a flavor or multiclass result when scores are close.
 - Selects a subclass within the winning class.
 
-Scoring philosophy and class/subclass logic are documented in [`Docs/dnd_class_test_companion_plan.md`](Docs/dnd_class_test_companion_plan.md). Research background lives in [`Docs/Research foundations for a D&D class personality test.md`](Docs/Research%20foundations%20for%20a%20D%26D%20class%20personality%20test.md).
+Scoring philosophy, class/subclass logic, and research background are tracked in internal design notes (not published).
 
 ## Tech Stack
 
@@ -28,8 +28,6 @@ Scoring philosophy and class/subclass logic are documented in [`Docs/dnd_class_t
 │   ├── main.jsx                          # React root mount
 │   ├── styles.css                        # Tailwind + custom styles
 │   └── components/ui/                    # Button, Card, Progress, Badge primitives
-├── Docs/                                 # Design plan, research notes, skill/hobby reference
-├── Fantasy_Design_Skill/SKILL.md         # Design language guidance
 ├── vite.config.js
 └── package.json
 ```
@@ -62,7 +60,7 @@ To enable on a fresh clone: Repo Settings → Pages → Source = **GitHub Action
 
 ## Status
 
-Active development. The v2 quiz file is the current working version. Plan documents in `Docs/` should be reviewed before changing class logic, question wording, or scoring thresholds.
+Active development. The v2 quiz file is the current working version.
 
 ## License
 
