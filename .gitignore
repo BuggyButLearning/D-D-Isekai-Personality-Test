@@ -5,6 +5,10 @@ node_modules/
 dist/
 build/
 
+# Icon pipeline intermediates (final icons in public/class-icons/*.png are tracked)
+public/class-icons/ai-generated/
+public/class-icons/archive/
+
 # Logs
 *.log
 vite-dev.log

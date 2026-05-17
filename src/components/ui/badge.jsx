@@ -1,13 +1,13 @@
 import React from "react";
 
 const variants = {
-  default: "border-[#ffe08a] bg-[#f2c14e] text-[#120d08]",
-  outline: "border-[#9f6f2e] bg-[#120d08] text-[#f8edcf]",
+  default: "bg-[#d85a24] text-[#fff2cf]",
+  outline: "bg-[#fff2cf] text-[#171717]",
 };
 
 export function Badge({ className = "", variant = "default", ...props }) {
   const base =
-    "rpg-badge inline-flex items-center border px-2.5 py-1 text-xs font-bold leading-5";
+    "pixel-badge inline-flex items-center px-3 py-2 text-[9px] font-bold leading-4";
 
   return <span className={`${base} ${variants[variant] || variants.default} ${className}`} {...props} />;
 }

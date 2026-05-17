@@ -1,9 +1,9 @@
 import React from "react";
 
 const variants = {
-  default: "border-yellow-200 bg-[#f2c14e] text-[#120d08] hover:bg-[#ffe08a]",
-  outline: "border-[#c8943a] bg-[#120d08] text-[#f8edcf] hover:bg-[#241a10] hover:text-[#fff6d8]",
-  ghost: "border-transparent bg-transparent text-[#c9b88d] shadow-none hover:border-[#745124] hover:bg-[#120d08] hover:text-[#f8edcf]",
+  default: "bg-[#d85a24] text-[#fff2cf] hover:bg-[#ef7a32]",
+  outline: "bg-[#fff2cf] text-[#171717] hover:bg-[#ffe5c9]",
+  ghost: "bg-[#c7381d] text-[#fff2cf] hover:bg-[#df4c2a]",
 };
 
 export function Button({
@@ -14,7 +14,7 @@ export function Button({
   ...props
 }) {
   const base =
-    "rpg-button inline-flex min-h-10 items-center justify-center px-4 py-2 text-sm font-bold transition disabled:pointer-events-none disabled:opacity-50";
+    "pixel-button inline-flex min-h-11 items-center justify-center px-4 py-2 text-[10px] font-bold leading-5 transition disabled:pointer-events-none disabled:opacity-60";
 
   return (
     <button

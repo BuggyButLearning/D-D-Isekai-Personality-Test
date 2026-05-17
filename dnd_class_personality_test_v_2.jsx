@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { ChevronLeft, ChevronRight, RotateCcw, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 
 const CLASSES = [
   "Artificer",
@@ -24,92 +24,92 @@ const CLASSES = [
 
 const classData = {
   Artificer: {
-    color: "bg-amber-400/15 text-amber-100 border-amber-300/60",
-    accent: "text-amber-300",
+    color: "bg-[#d85a24] text-[#fff2cf] border-[#0b0b0b]",
+    accent: "text-[#8e2c1a]",
     motto: "Power through tools, invention, repair, and applied systems.",
     summary: "You turn ideas into working things. You build, automate, repair, prototype, script, engineer, and make abstract knowledge usable in the real world.",
     traits: ["Tool Builder", "Applied Technical", "Prototype Mind"],
   },
   Barbarian: {
-    color: "bg-red-500/15 text-red-100 border-red-300/60",
-    accent: "text-red-300",
+    color: "bg-[#c7381d] text-[#fff2cf] border-[#0b0b0b]",
+    accent: "text-[#8e2c1a]",
     motto: "Power through pressure, instinct, and raw courage.",
     summary: "You are at your strongest when the situation gets intense. You move toward pressure instead of away from it, and your strength is protective, emotional, and immediate.",
     traits: ["Pressure Brave", "Protective Force", "Explosive Energy"],
   },
   Bard: {
-    color: "bg-pink-500/15 text-pink-100 border-pink-300/60",
-    accent: "text-pink-300",
+    color: "bg-[#ef7a32] text-[#171717] border-[#0b0b0b]",
+    accent: "text-[#c7381d]",
     motto: "Power through expression, influence, and shared emotion.",
     summary: "You change the room. Through humor, music, teaching, storytelling, performance, or social skill, your gift is turning attention into momentum.",
     traits: ["Story Shaper", "Social Spark", "Creative Influence"],
   },
   Cleric: {
-    color: "bg-yellow-400/15 text-yellow-100 border-yellow-300/60",
-    accent: "text-yellow-300",
+    color: "bg-[#fff2cf] text-[#171717] border-[#0b0b0b]",
+    accent: "text-[#d85a24]",
     motto: "Power through devotion, service, and sacred responsibility.",
     summary: "You are driven by care, calling, and service. Your strength comes from helping people heal, endure, and reconnect with something larger than themselves.",
     traits: ["Community Healer", "Devoted Guide", "Steady Light"],
   },
   Druid: {
-    color: "bg-green-500/15 text-green-100 border-green-300/60",
-    accent: "text-green-300",
+    color: "bg-[#168a32] text-[#fff2cf] border-[#0b0b0b]",
+    accent: "text-[#0d5521]",
     motto: "Power through nature, balance, and living systems.",
     summary: "You feel oriented by nature and living systems. Your instincts lean toward stewardship, ecology, animals, plants, cycles, and balance.",
     traits: ["Nature Bound", "Balance Keeper", "Living Systems Mind"],
   },
   Fighter: {
-    color: "bg-slate-400/15 text-slate-100 border-slate-300/60",
-    accent: "text-slate-300",
+    color: "bg-[#727a78] text-[#fff2cf] border-[#0b0b0b]",
+    accent: "text-[#4d5554]",
     motto: "Power through training, discipline, and repeatable skill.",
     summary: "You respect craft. You build competence through drills, systems, tools, and practice until your skill works under pressure.",
     traits: ["Trained Operator", "Tactical Builder", "Reliable Specialist"],
   },
   Monk: {
-    color: "bg-orange-500/15 text-orange-100 border-orange-300/60",
-    accent: "text-orange-300",
+    color: "bg-[#f1c4a8] text-[#171717] border-[#0b0b0b]",
+    accent: "text-[#d85a24]",
     motto: "Power through discipline, body control, and inner focus.",
     summary: "You are strongest when body and mind work together. Your path is discipline, self regulation, martial practice, breath, restraint, and focused repetition.",
     traits: ["Body Mind Discipline", "Calm Under Strain", "Focused Practice"],
   },
   Paladin: {
-    color: "bg-blue-500/15 text-blue-100 border-blue-300/60",
-    accent: "text-blue-300",
+    color: "bg-[#8ddfd6] text-[#171717] border-[#0b0b0b]",
+    accent: "text-[#2e7f82]",
     motto: "Power through oath, duty, and moral action.",
     summary: "You are not just motivated. You are committed. Your identity sharpens around causes, promises, standards, and action when something important is on the line.",
     traits: ["Oath Driven", "Moral Protector", "Mission Leader"],
   },
   Ranger: {
-    color: "bg-emerald-500/15 text-emerald-100 border-emerald-300/60",
-    accent: "text-emerald-300",
+    color: "bg-[#0d5521] text-[#fff2cf] border-[#0b0b0b]",
+    accent: "text-[#168a32]",
     motto: "Power through fieldcraft, tracking, and practical independence.",
     summary: "You are observant, practical, and comfortable operating away from the crowd. You notice terrain, patterns, movement, risks, and resources before others do.",
     traits: ["Field Ready", "Quiet Watcher", "Practical Survivor"],
   },
   Rogue: {
-    color: "bg-zinc-400/15 text-zinc-100 border-zinc-300/60",
-    accent: "text-zinc-300",
+    color: "bg-[#2b2f31] text-[#fff2cf] border-[#0b0b0b]",
+    accent: "text-[#727a78]",
     motto: "Power through cunning, precision, and alternate routes.",
     summary: "You solve problems by seeing the side door. You are precise, adaptive, skeptical of obvious paths, and good at turning limited information into advantage.",
     traits: ["Side Door Thinker", "Precision Mover", "Information Edge"],
   },
   Sorcerer: {
-    color: "bg-purple-500/15 text-purple-100 border-purple-300/60",
-    accent: "text-purple-300",
+    color: "bg-[#8e2c1a] text-[#fff2cf] border-[#0b0b0b]",
+    accent: "text-[#c7381d]",
     motto: "Power through innate gift, charisma, and natural force.",
     summary: "Some of what you do well seems to come naturally. You often rely on instinct, presence, raw aptitude, or personal magnetism before formal systems catch up.",
     traits: ["Natural Talent", "Raw Spark", "Instinctive Power"],
   },
   Warlock: {
-    color: "bg-indigo-500/15 text-indigo-100 border-indigo-300/60",
-    accent: "text-indigo-300",
+    color: "bg-[#4d5554] text-[#fff2cf] border-[#0b0b0b]",
+    accent: "text-[#2b2f31]",
     motto: "Power through patronage, leverage, and rare access.",
     summary: "You understand that power often comes through networks, institutions, sponsors, mentors, contracts, platforms, and access. You are good at using leverage others overlook.",
     traits: ["Patron Linked", "Access Broker", "Leverage Mind"],
   },
   Wizard: {
-    color: "bg-cyan-500/15 text-cyan-100 border-cyan-300/60",
-    accent: "text-cyan-300",
+    color: "bg-[#c5cbc7] text-[#171717] border-[#0b0b0b]",
+    accent: "text-[#2e7f82]",
     motto: "Power through study, systems, and documented mastery.",
     summary: "You turn knowledge into capability. You research, document, compare, prepare, and build mental models until a confusing problem becomes a usable system.",
     traits: ["Scholar Builder", "Systems Thinker", "Prepared Mind"],
@@ -117,19 +117,35 @@ const classData = {
 };
 
 const scoreBarColors = {
-  Artificer: "bg-amber-300",
-  Barbarian: "bg-red-400",
-  Bard: "bg-pink-300",
-  Cleric: "bg-yellow-200",
-  Druid: "bg-green-400",
-  Fighter: "bg-slate-300",
-  Monk: "bg-orange-300",
-  Paladin: "bg-blue-300",
-  Ranger: "bg-emerald-300",
-  Rogue: "bg-zinc-300",
-  Sorcerer: "bg-purple-300",
-  Warlock: "bg-indigo-300",
-  Wizard: "bg-cyan-300",
+  Artificer: "bg-[#d85a24]",
+  Barbarian: "bg-[#c7381d]",
+  Bard: "bg-[#ef7a32]",
+  Cleric: "bg-[#fff2cf]",
+  Druid: "bg-[#168a32]",
+  Fighter: "bg-[#727a78]",
+  Monk: "bg-[#f1c4a8]",
+  Paladin: "bg-[#8ddfd6]",
+  Ranger: "bg-[#0d5521]",
+  Rogue: "bg-[#2b2f31]",
+  Sorcerer: "bg-[#8e2c1a]",
+  Warlock: "bg-[#4d5554]",
+  Wizard: "bg-[#c5cbc7]",
+};
+
+const classIconSrc = {
+  Artificer: "/class-icons/artificer.png",
+  Barbarian: "/class-icons/barbarian.png",
+  Bard: "/class-icons/bard.png",
+  Cleric: "/class-icons/cleric.png",
+  Druid: "/class-icons/druid.png",
+  Fighter: "/class-icons/fighter.png",
+  Monk: "/class-icons/monk.png",
+  Paladin: "/class-icons/paladin.png",
+  Ranger: "/class-icons/ranger.png",
+  Rogue: "/class-icons/rogue.png",
+  Sorcerer: "/class-icons/sorcerer.png",
+  Warlock: "/class-icons/warlock.png",
+  Wizard: "/class-icons/wizard.png",
 };
 
 const subclassData = {
@@ -576,31 +592,26 @@ const questions = [
   },
 ];
 
-function PixelIcon({ name, size = 120 }) {
-  const icons = {
-    Artificer: { symbol: "Gear", pixels: [[4,1],[2,2],[4,2],[6,2],[1,4],[2,4],[3,4],[4,4],[5,4],[6,4],[7,4],[2,6],[4,6],[6,6],[4,7],[3,3],[5,3],[3,5],[5,5]] },
-    Barbarian: { symbol: "Axe", pixels: [[3,1],[4,1],[2,2],[3,2],[4,2],[5,2],[3,3],[4,3],[4,4],[4,5],[4,6],[4,7],[3,8],[5,8]] },
-    Bard: { symbol: "Lyre", pixels: [[2,2],[3,1],[4,1],[5,2],[2,3],[5,3],[2,4],[3,5],[4,5],[5,4],[3,3],[4,3],[3,4],[4,4]] },
-    Cleric: { symbol: "Sun", pixels: [[4,1],[4,2],[2,3],[3,3],[4,3],[5,3],[6,3],[1,4],[2,4],[3,4],[4,4],[5,4],[6,4],[7,4],[2,5],[3,5],[4,5],[5,5],[6,5],[4,6],[4,7]] },
-    Druid: { symbol: "Leaf", pixels: [[5,1],[4,2],[5,2],[3,3],[4,3],[5,3],[2,4],[3,4],[4,4],[5,4],[3,5],[4,5],[2,6],[3,6],[1,7],[2,7]] },
-    Fighter: { symbol: "Sword", pixels: [[4,1],[4,2],[4,3],[4,4],[4,5],[3,6],[4,6],[5,6],[2,7],[4,7],[6,7],[4,8]] },
-    Monk: { symbol: "Fist", pixels: [[2,2],[3,2],[4,2],[5,2],[2,3],[3,3],[4,3],[5,3],[1,4],[2,4],[3,4],[4,4],[5,4],[2,5],[3,5],[4,5],[3,6],[4,6]] },
-    Paladin: { symbol: "Shield", pixels: [[2,1],[3,1],[4,1],[5,1],[6,1],[2,2],[3,2],[4,2],[5,2],[6,2],[2,3],[3,3],[4,3],[5,3],[6,3],[3,4],[4,4],[5,4],[3,5],[4,5],[5,5],[4,6],[4,7]] },
-    Ranger: { symbol: "Bow", pixels: [[5,1],[4,2],[3,3],[2,4],[3,5],[4,6],[5,7],[5,2],[5,3],[5,4],[5,5],[5,6],[2,2],[3,3],[4,4]] },
-    Rogue: { symbol: "Dagger", pixels: [[5,1],[4,2],[4,3],[3,4],[3,5],[2,6],[1,7],[3,7],[4,8]] },
-    Sorcerer: { symbol: "Spark", pixels: [[4,1],[3,2],[4,2],[5,2],[2,3],[3,3],[4,3],[5,3],[6,3],[3,4],[4,4],[5,4],[4,5],[4,6],[3,7],[5,7]] },
-    Warlock: { symbol: "Eye", pixels: [[3,2],[4,2],[5,2],[2,3],[3,3],[4,3],[5,3],[6,3],[1,4],[2,4],[3,4],[4,4],[5,4],[6,4],[7,4],[2,5],[3,5],[4,5],[5,5],[6,5],[3,6],[4,6],[5,6]] },
-    Wizard: { symbol: "Book", pixels: [[1,2],[2,2],[3,2],[5,2],[6,2],[7,2],[1,3],[2,3],[3,3],[4,3],[5,3],[6,3],[7,3],[1,4],[2,4],[3,4],[4,4],[5,4],[6,4],[7,4],[1,5],[2,5],[3,5],[5,5],[6,5],[7,5],[4,2],[4,5]] },
-  };
-  const data = icons[name] || icons.Fighter;
+function ClassIcon({ name, size = 120, className = "" }) {
+  const src = classIconSrc[name] || classIconSrc.Fighter;
 
   return (
-    <svg width={size} height={size} viewBox="0 0 9 9" className="drop-shadow-[0_0_18px_currentColor]" role="img" aria-label={`${name} ${data.symbol} icon`}>
-      <rect x="0" y="0" width="9" height="9" rx="1" fill="currentColor" opacity="0.08" />
-      {data.pixels.map(([x, y], i) => (
-        <rect key={`${x}-${y}-${i}`} x={x} y={y} width="1" height="1" fill="currentColor" />
-      ))}
-    </svg>
+    <img
+      src={src}
+      width={size}
+      height={size}
+      className={`class-icon ${className}`}
+      alt={`${name} 8-bit class icon`}
+      draggable="false"
+    />
+  );
+}
+
+function ClassPortrait({ name, classInfo, size = 156, className = "" }) {
+  return (
+    <div className={`pixel-portrait flex items-center justify-center ${classInfo.color} ${className}`}>
+      <ClassIcon name={name} size={size} />
+    </div>
   );
 }
 
@@ -775,34 +786,38 @@ export default function DndClassPersonalityTest() {
   const traitList = result.traitBadges.length ? result.traitBadges : primary.traits;
 
   return (
-    <div className="rpg-screen p-3 text-[#f8edcf] sm:p-4 md:p-8">
+    <div className="pixel-screen p-3 text-[#fff0bf] sm:p-4 md:p-8">
       <div className="mx-auto max-w-5xl">
-        <header className="mb-6 text-center">
-          <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="rpg-badge inline-flex items-center gap-2 border border-[#9f6f2e] bg-[#120d08] px-4 py-2 text-sm font-bold text-[#ffe08a]">
-            <Sparkles className="h-4 w-4" /> Real Life D&D Class Test
-          </motion.div>
-          <h1 className="rpg-display mt-4 text-4xl font-black leading-tight text-[#fff6d8] md:text-6xl">What class did your life build?</h1>
-          <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-[#c9b88d] md:text-base">
-            Answer practical questions about how you train, learn, serve, build, lead, improvise, and gain power. You will get one dominant class unless your top two are genuinely close.
+        <header className="mb-6 grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
+          <div>
+            <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="pixel-badge inline-flex items-center gap-2 bg-[#fff2cf] px-4 py-2 text-[9px] font-bold text-[#171717]">
+              <Sparkles className="h-3 w-3" /> Real Life D&D Class Test
+            </motion.div>
+            <div className="pixel-plaque mt-4 max-w-3xl">
+              <h1 className="pixel-title text-2xl font-black leading-relaxed text-[#c7381d] md:text-4xl">What class did your life build?</h1>
+            </div>
+          </div>
+          <p className="max-w-2xl border-4 border-[#0b0b0b] bg-[#fff2cf] p-4 text-sm leading-6 text-[#171717] shadow-[inset_0_0_0_3px_#d85a24,4px_4px_0_#0b0b0b] md:max-w-sm">
+            Answer practical questions about how you train, learn, serve, build, lead, improvise, and gain power.
           </p>
         </header>
 
         <Card className="overflow-visible">
           <CardContent className="p-0">
-            <div className="pixel-section border-b p-4 md:p-6">
-              <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-bold uppercase text-[#c9b88d] md:text-sm">
-                <span>{showResult ? "Character Sheet" : `Quest ${step + 1} / ${questions.length}`}</span>
-                <span>{progress}% XP</span>
+            <div className="pixel-strip border-b-4 p-4 md:p-6">
+              <div className="flex flex-wrap items-center justify-between gap-3 text-[10px] font-bold uppercase tracking-wider text-[#fff2cf] md:text-[11px]">
+                <span>{showResult ? "CHAR SHEET" : `QUEST ${String(step + 1).padStart(2, "0")} / ${questions.length}`}</span>
+                <span>XP {progress}/100</span>
               </div>
-              <Progress value={progress} className="mt-3" aria-label={`${progress}% complete`} />
+              <Progress value={progress} className="mt-4" aria-label={`${progress}% complete`} />
             </div>
 
             <AnimatePresence mode="wait">
               {!showResult ? (
                 <motion.div key={step} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="p-5 md:p-8">
-                  <Badge variant="outline" className="mb-4">{current.section}</Badge>
-                  <h2 className="rpg-display text-3xl font-bold leading-tight text-[#fff6d8] md:text-4xl">{current.text}</h2>
-                  <div className="mt-6 grid gap-3">
+                  <Badge variant="outline" className="mb-5">{current.section}</Badge>
+                  <h2 className="text-xl font-extrabold leading-8 text-[#0b0b0b] md:text-2xl">{current.text}</h2>
+                  <div className="mt-6 grid gap-4">
                     {current.options.map((option, index) => {
                       const selected = answers[step] === index;
                       return (
@@ -811,9 +826,10 @@ export default function DndClassPersonalityTest() {
                           type="button"
                           onClick={() => choose(index)}
                           aria-pressed={selected}
-                          className={`answer-row min-h-14 px-5 py-4 pl-10 text-left text-sm font-semibold leading-6 transition md:text-base ${selected ? "is-selected" : ""}`}
+                          className={`pixel-menu-row px-4 py-4 text-left text-xs font-bold leading-6 md:text-sm ${selected ? "is-selected" : ""}`}
                         >
-                          <span>{option.label}</span>
+                          <span className="pixel-menu-letter" aria-hidden="true">{String.fromCharCode(65 + index)}</span>
+                          <span className="flex-1">{option.label}</span>
                         </button>
                       );
                     })}
@@ -821,24 +837,28 @@ export default function DndClassPersonalityTest() {
                 </motion.div>
               ) : (
                 <motion.div key="result" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="p-5 md:p-8">
-                  <div className="grid gap-8 md:grid-cols-[240px_1fr] md:items-center">
-                    <div className={`portrait-slot mx-auto flex h-56 w-56 items-center justify-center ${primary.color}`}>
-                      <div className={primary.accent}>
-                        <PixelIcon name={result.topClass} size={160} />
+                  <div className="grid gap-8 md:grid-cols-[224px_1fr] md:items-center">
+                    {result.isMulticlass ? (
+                      <div className="multiclass-portraits mx-auto" aria-label={`${result.topClass} and ${result.secondClass} class icons`}>
+                        <ClassPortrait name={result.topClass} classInfo={primary} size={124} className="class-portrait-dual class-portrait-primary" />
+                        <div className="multiclass-divider pixel-font" aria-hidden="true">/</div>
+                        <ClassPortrait name={result.secondClass} classInfo={secondary} size={112} className="class-portrait-dual class-portrait-secondary" />
                       </div>
-                    </div>
+                    ) : (
+                      <ClassPortrait name={result.topClass} classInfo={primary} size={156} className="mx-auto h-52 w-52" />
+                    )}
                     <div className="min-w-0">
-                      <Badge className={`${primary.color} border`}>{result.isMulticlass ? "Multiclass Result" : "Dominant Class"}</Badge>
-                      <h2 className="rpg-display mt-3 break-words text-5xl font-black leading-none text-[#fff6d8] md:text-6xl">{resultTitle}</h2>
-                      <div className="mt-4 flex flex-wrap gap-2">
+                      <Badge className={`${primary.color}`}>{result.isMulticlass ? "Multiclass Result" : "Dominant Class"}</Badge>
+                      <h2 className="pixel-title mt-4 break-words text-3xl font-black leading-relaxed text-[#c7381d] md:text-5xl">{resultTitle}</h2>
+                      <div className="mt-4 flex flex-wrap gap-3">
                         <Badge variant="outline">Subclass: {subclassTitle}</Badge>
                       </div>
-                      <p className={`mt-5 text-base font-bold leading-7 md:text-lg ${primary.accent}`}>{primary.motto}</p>
-                      <p className="mt-4 leading-7 text-[#d9c89d]">{primary.summary}</p>
-                      <p className="mt-3 leading-7 text-[#d9c89d]"><strong className="text-[#fff6d8]">{result.topSubclass}:</strong> {subclassData[result.topClass]?.[result.topSubclass]}</p>
+                      <p className={`mt-5 text-sm font-bold leading-7 md:text-base ${primary.accent}`}>{primary.motto}</p>
+                      <p className="mt-4 leading-7 text-[#171717]">{primary.summary}</p>
+                      <p className="mt-3 leading-7 text-[#171717]"><strong className="text-[#8e2c1a]">{result.topSubclass}:</strong> {subclassData[result.topClass]?.[result.topSubclass]}</p>
                       {result.isMulticlass && (
-                        <p className="mt-3 leading-7 text-[#d9c89d]">
-                          Your second class is not just flavor. <strong className="text-[#fff6d8]">{result.secondClass}</strong> scored close enough to your top class to count as a true secondary path. {secondary.summary}
+                        <p className="mt-3 leading-7 text-[#171717]">
+                          Your second class is not just flavor. <strong className="text-[#8e2c1a]">{result.secondClass}</strong> scored close enough to your top class to count as a true secondary path. {secondary.summary}
                         </p>
                       )}
                     </div>
@@ -846,26 +866,29 @@ export default function DndClassPersonalityTest() {
 
                   <div className="mt-8 grid gap-4 md:grid-cols-3">
                     {traitList.map((trait) => (
-                      <div key={trait} className="stat-tile p-4">
-                        <div className="text-xs font-bold uppercase text-[#8e7a55]">Unique Trait</div>
-                        <div className="mt-2 text-lg font-bold text-[#fff6d8]">{trait}</div>
+                      <div key={trait} className="pixel-slot p-5">
+                        <div className="pixel-font text-[9px] font-bold uppercase tracking-wider text-[#8e2c1a]">Item Slot</div>
+                        <div className="mt-3 text-sm font-bold leading-6 text-[#0b0b0b]">{trait}</div>
                       </div>
                     ))}
                   </div>
 
-                  <div className="score-panel mt-8 p-4 md:p-5">
-                    <h3 className="rpg-display text-2xl font-bold text-[#fff6d8]">Top class scores</h3>
-                    <div className="mt-4 grid gap-4">
+                  <div className="pixel-score-window mt-8 p-5 md:p-6">
+                    <h3 className="pixel-font text-sm font-bold text-[#171717]">Top class scores</h3>
+                    <div className="mt-5 grid gap-4">
                       {result.ranked.slice(0, 5).map(([name, score]) => {
                         const pct = Math.round((score / Math.max(result.topScore, 1)) * 100);
                         return (
                           <div key={name}>
-                            <div className="mb-2 flex justify-between gap-4 text-sm font-bold text-[#d9c89d]">
-                              <span>{name}</span>
+                            <div className="mb-2 flex justify-between gap-4 text-xs font-bold text-[#171717]">
+                              <span className="flex min-w-0 items-center gap-2">
+                                <ClassIcon name={name} size={28} className="score-class-icon" />
+                                <span className="truncate">{name}</span>
+                              </span>
                               <span>{score}</span>
                             </div>
-                            <div className="h-4 border-2 border-[#4b351f] bg-[#080604] p-0.5 shadow-[inset_0_0_0_2px_#000]">
-                              <div className={`stat-fill ${scoreBarColors[name] || "bg-[#f2c14e]"}`} style={{ width: `${pct}%` }} />
+                            <div className="pixel-stat-meter">
+                              <div className={`pixel-stat-fill ${scoreBarColors[name] || "bg-[#d79b42]"}`} style={{ width: `${pct}%` }} />
                             </div>
                           </div>
                         );
@@ -876,16 +899,16 @@ export default function DndClassPersonalityTest() {
               )}
             </AnimatePresence>
 
-            <div className="pixel-section flex flex-wrap items-center justify-between gap-3 border-t p-4 md:p-6">
+            <div className="pixel-strip flex flex-wrap items-center justify-between gap-4 border-t-4 p-4 md:p-6">
               <Button variant="outline" onClick={back} disabled={step === 0 && !showResult} className="gap-2">
                 <ChevronLeft className="h-4 w-4" /> Back
               </Button>
               <div className="flex flex-wrap justify-end gap-3">
-                <Button variant="ghost" onClick={reset} className="gap-2">
-                  <RotateCcw className="h-4 w-4" /> Reset
+                <Button variant="outline" onClick={reset} className="gap-2">
+                  Reset
                 </Button>
                 {!showResult && (
-                  <Button onClick={next} disabled={answers[step] === undefined} className="gap-2 disabled:border-[#4b351f] disabled:bg-[#1a130c] disabled:text-[#8e7a55]">
+                  <Button onClick={next} disabled={answers[step] === undefined} className="gap-2 bg-[#168a32] text-[#fff2cf] hover:bg-[#1ea83d] disabled:bg-[#2b2f31] disabled:text-[#727a78]">
                     {step === questions.length - 1 ? "Reveal Class" : "Next"} <ChevronRight className="h-4 w-4" />
                   </Button>
                 )}
@@ -894,7 +917,7 @@ export default function DndClassPersonalityTest() {
           </CardContent>
         </Card>
 
-        <p className="mt-5 text-center text-xs leading-5 text-[#8e7a55]">
+        <p className="mt-6 border-4 border-[#0b0b0b] bg-[#fff2cf] p-3 text-center text-[10px] leading-5 text-[#171717] shadow-[inset_0_0_0_3px_#d85a24,4px_4px_0_#0b0b0b]">
           Built as an entertainment and self reflection quiz, not a clinical, hiring, or ability assessment.
         </p>
       </div>

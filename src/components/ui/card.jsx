@@ -1,7 +1,7 @@
 import React from "react";
 
 export function Card({ className = "", ...props }) {
-  return <div className={`pixel-panel text-[#f8edcf] ${className}`} {...props} />;
+  return <div className={`pixel-window text-[#fff0bf] ${className}`} {...props} />;
 }
 
 export function CardContent({ className = "", ...props }) {
