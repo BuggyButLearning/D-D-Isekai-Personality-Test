@@ -52,6 +52,14 @@ npm run build
 npm run preview
 ```
 
+## Deployment
+
+Hosted on GitHub Pages at `https://buggybutlearning.github.io/D-D-Isekai-Personality-Test/`.
+
+Deployment is automated via GitHub Actions (`.github/workflows/deploy.yml`): every push to `main` triggers a Vite build and publishes the `dist/` folder to Pages. The Vite `base` is set to the repo path in [`vite.config.js`](vite.config.js) so asset URLs resolve correctly under the subdirectory.
+
+To enable on a fresh clone: Repo Settings → Pages → Source = **GitHub Actions**.
+
 ## Status
 
 Active development. The v2 quiz file is the current working version. Plan documents in `Docs/` should be reviewed before changing class logic, question wording, or scoring thresholds.
