@@ -1,4 +1,5 @@
 // v3 self-tests. Run: node src/selftest_v3.mjs
+import { existsSync } from "node:fs";
 import { CLASSES, baselineQuestions, tieBreakerPool, subclassFlavorPool, HOBBIES } from "./questions_v3.mjs";
 import {
   calculateResult,
@@ -12,6 +13,7 @@ import {
   getGrowthTip,
 } from "./engine_v3.mjs";
 import {
+  classIconSrc,
   personalNarratives,
   characterNarratives,
   characterSubclassPhrases,
@@ -147,7 +149,18 @@ for (const cls of CLASSES) {
   assert(Boolean(characterSubclassPhrases[cls]), `${cls} has characterSubclassPhrases entry`);
 }
 
-// 12. Insight helpers behave on a known Wizard-biased answer set
+// 12. Every class icon is deploy-safe and points at a real public asset
+for (const cls of CLASSES) {
+  const iconPath = classIconSrc[cls];
+  assert(Boolean(iconPath), `${cls} has class icon metadata`);
+  assert(!iconPath.startsWith("/"), `${cls} class icon path is relative for subpath deploys (${iconPath})`);
+  assert(
+    existsSync(new URL(`../public/${iconPath}`, import.meta.url)),
+    `${cls} class icon file exists at public/${iconPath}`
+  );
+}
+
+// 13. Insight helpers behave on a known Wizard-biased answer set
 {
   const answers = {};
   for (const q of baselineQuestions) {
@@ -177,7 +190,7 @@ for (const cls of CLASSES) {
   assert(Boolean(tip?.headline) && Boolean(tip?.body), `getGrowthTip returns headline + body`);
 }
 
-// 13. Insight helpers don't break on empty answers
+// 14. Insight helpers don't break on empty answers
 {
   const r = calculateResult({});
   const anchor = getAnchorHobby({});

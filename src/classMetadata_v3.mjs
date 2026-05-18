@@ -111,19 +111,19 @@ export const scoreBarColors = {
 };
 
 export const classIconSrc = {
-  Artificer: "/class-icons/artificer.png",
-  Barbarian: "/class-icons/barbarian.png",
-  Bard: "/class-icons/bard.png",
-  Cleric: "/class-icons/cleric.png",
-  Druid: "/class-icons/druid.png",
-  Fighter: "/class-icons/fighter.png",
-  Monk: "/class-icons/monk.png",
-  Paladin: "/class-icons/paladin.png",
-  Ranger: "/class-icons/ranger.png",
-  Rogue: "/class-icons/rogue.png",
-  Sorcerer: "/class-icons/sorcerer.png",
-  Warlock: "/class-icons/warlock.png",
-  Wizard: "/class-icons/wizard.png",
+  Artificer: "class-icons/artificer.png",
+  Barbarian: "class-icons/barbarian.png",
+  Bard: "class-icons/bard.png",
+  Cleric: "class-icons/cleric.png",
+  Druid: "class-icons/druid.png",
+  Fighter: "class-icons/fighter.png",
+  Monk: "class-icons/monk.png",
+  Paladin: "class-icons/paladin.png",
+  Ranger: "class-icons/ranger.png",
+  Rogue: "class-icons/rogue.png",
+  Sorcerer: "class-icons/sorcerer.png",
+  Warlock: "class-icons/warlock.png",
+  Wizard: "class-icons/wizard.png",
 };
 
 export const subclassData = {

@@ -27,6 +27,7 @@ Thumbs.db
 # Local tool settings
 .claude/
 .cursor/
+CLAUDE.md
 
 # Env
 .env
