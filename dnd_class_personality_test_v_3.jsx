@@ -19,6 +19,7 @@ import {
   getGrowthTip,
 } from "./src/engine_v3.mjs";
 import { classData, subclassData, scoreBarColors, classIconSrc } from "./src/classMetadata_v3.mjs";
+import { getFacetBlurb } from "./src/facetBlurbs.mjs";
 import {
   buildSnapshot,
   encodeSnapshot,
@@ -659,14 +660,20 @@ export default function DndClassPersonalityTestV3() {
                   </div>
 
                   <div className="mt-8 grid gap-4 md:grid-cols-3">
-                    {traitList.map((trait) => (
-                      <div key={trait} className="pixel-slot p-5">
-                        <div className="pixel-font text-[9px] font-bold uppercase tracking-wider text-[#8e2c1a]">
-                          Trait
+                    {traitList.map((trait) => {
+                      const blurb = getFacetBlurb(trait);
+                      return (
+                        <div key={trait} className="pixel-slot p-5">
+                          <div className="pixel-font text-[9px] font-bold uppercase tracking-wider text-[#8e2c1a]">
+                            Trait
+                          </div>
+                          <div className="mt-3 text-sm font-bold leading-6 text-[#0b0b0b]">{trait}</div>
+                          {blurb && (
+                            <div className="mt-2 text-xs leading-snug text-[#3a3a3a]">{blurb}</div>
+                          )}
                         </div>
-                        <div className="mt-3 text-sm font-bold leading-6 text-[#0b0b0b]">{trait}</div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
 
                   <div className="pixel-score-window mt-8 p-5 md:p-6">
