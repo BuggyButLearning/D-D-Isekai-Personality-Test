@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-const src = fs.readFileSync(path.resolve("dnd_class_personality_test_v_2.jsx"), "utf8");
+const src = fs.readFileSync(path.resolve("archive/dnd_class_personality_test_v_2.jsx"), "utf8");
 const lines = src.split("\n");
 
 // slice CLASSES..end of questions (line 593) + buildInitialScores..end of calculateResult (618..703)

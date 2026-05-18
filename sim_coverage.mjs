@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-const src = fs.readFileSync(path.resolve("dnd_class_personality_test_v_2.jsx"), "utf8");
+const src = fs.readFileSync(path.resolve("archive/dnd_class_personality_test_v_2.jsx"), "utf8");
 const lines = src.split("\n");
 const part1 = lines.slice(8, 593).join("\n");
 const part2 = lines.slice(617, 703).join("\n");

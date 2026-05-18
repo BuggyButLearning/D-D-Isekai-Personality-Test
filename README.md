@@ -22,12 +22,18 @@ Scoring philosophy, class/subclass logic, and research background are tracked in
 
 ```
 .
-├── dnd_class_personality_test_v_2.jsx   # Main quiz component (classes, questions, scoring)
+├── dnd_class_personality_test_v_3.jsx   # Main quiz component (branching state machine)
 ├── index.html                            # Vite entry
 ├── src/
 │   ├── main.jsx                          # React root mount
+│   ├── questions_v3.mjs                  # Question pools (baseline, tie-breakers, subclass flavor)
+│   ├── engine_v3.mjs                     # Scoring + branching engine
+│   ├── classMetadata_v3.mjs              # Class/subclass descriptions, colors, icons
+│   ├── selftest_v3.mjs                   # 49 self-tests
 │   ├── styles.css                        # Tailwind + custom styles
 │   └── components/ui/                    # Button, Card, Progress, Badge primitives
+├── archive/
+│   └── dnd_class_personality_test_v_2.jsx # Previous flat-pool version (kept for reference)
 ├── vite.config.js
 └── package.json
 ```
