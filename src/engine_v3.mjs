@@ -71,6 +71,8 @@ export function scoreBaseline(answers) {
 
 // Pick tie-breaker questions based on baseline result.
 // Fires when top-2 gap is narrow OR top-3 cluster present.
+// Also force-fires for any multiclass-candidate pair so TB answers can
+// inform the single-vs-multiclass decision.
 export function pickTieBreakers(baselineScores, maxToFire = 3) {
   const ranked = Object.entries(baselineScores).sort((a, b) => b[1] - a[1]);
   const [top, second, third] = ranked;
@@ -83,6 +85,9 @@ export function pickTieBreakers(baselineScores, maxToFire = 3) {
   if (third && (second[1] - third[1]) / Math.max(second[1], 1) <= 0.15) {
     triggerPairs.add(pairKey(top[0], third[0]));
   }
+
+  const candidate = isMulticlassCandidate(baselineScores);
+  if (candidate) triggerPairs.add(pairKey(candidate[0], candidate[1]));
 
   if (triggerPairs.size === 0) return [];
 
@@ -129,27 +134,39 @@ export function applySubclassAnswers(firedQuestions, answers, scores, subclassAc
   }
 }
 
-// Multiclass rule (tightened)
 const MULTICLASS_THRESHOLD = {
   topMin: 15,
   secondMin: 15,
-  secondPctOfTop: 0.82,
-  gapPctMax: 0.10,
+  secondPctOfTop: 0.78,
 };
 
-function detectMulticlass(scores, totalAnswered) {
+const MULTICLASS_CANDIDATE_PCT = 0.75;
+
+function detectMulticlass(scores) {
   const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
   const [top, second] = ranked;
-  if (!second) return { isMulticlass: false };
-  const maxReasonable = totalAnswered * 5;
-  const gapPct = (top[1] - second[1]) / Math.max(maxReasonable, 1);
+  if (!second) return { isMulticlass: false, ranked };
   const secondPctOfTop = top[1] ? second[1] / top[1] : 0;
   const isMulticlass =
     top[1] >= MULTICLASS_THRESHOLD.topMin &&
     second[1] >= MULTICLASS_THRESHOLD.secondMin &&
-    secondPctOfTop >= MULTICLASS_THRESHOLD.secondPctOfTop &&
-    gapPct <= MULTICLASS_THRESHOLD.gapPctMax;
+    secondPctOfTop >= MULTICLASS_THRESHOLD.secondPctOfTop;
   return { isMulticlass, ranked };
+}
+
+export function isMulticlassCandidate(scores) {
+  const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+  const [top, second] = ranked;
+  if (!second) return null;
+  const secondPctOfTop = top[1] ? second[1] / top[1] : 0;
+  if (
+    top[1] >= MULTICLASS_THRESHOLD.topMin &&
+    second[1] >= MULTICLASS_THRESHOLD.secondMin &&
+    secondPctOfTop >= MULTICLASS_CANDIDATE_PCT
+  ) {
+    return [top[0], second[0]];
+  }
+  return null;
 }
 
 // Determine top subclass for a class from accumulated subclass scores
@@ -170,22 +187,20 @@ export function calculateResult(answers) {
   const tbFired = pickTieBreakers(scores);
   applyTieBreakers(tbFired, answers, scores, subclassAccum, facets);
 
-  // subclass pick: top class after tie-breakers
-  const postTbRanked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+  // Decide multiclass AFTER tie-breakers. Multiclass result has no subclasses.
+  const postTbMc = detectMulticlass(scores);
+  const postTbRanked = postTbMc.ranked;
   const topClass = postTbRanked[0][0];
   const secondClass = postTbRanked[1]?.[0];
 
-  // Provisionally detect multiclass before subclass scoring (so we know whether to fire 1 or 2 subclass Qs)
-  const totalAnswered = Object.keys(answers).length;
-  const provisional = detectMulticlass(scores, totalAnswered);
-  const subQs = pickSubclassQuestions(topClass, provisional.isMulticlass ? secondClass : null);
+  const subQs = postTbMc.isMulticlass ? [] : pickSubclassQuestions(topClass);
   applySubclassAnswers(subQs, answers, scores, subclassAccum, facets);
 
-  // Final ranking + multiclass
+  // Final ranking. Multiclass decision is locked at the post-tie-breaker step
+  // so that subclass-answer score nudges can't flip the flag mid-flow.
   const finalRanked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
-  const finalTop = finalRanked[0][0];
-  const finalSecond = finalRanked[1]?.[0];
-  const finalMc = detectMulticlass(scores, totalAnswered);
+  const finalTop = postTbMc.isMulticlass ? topClass : finalRanked[0][0];
+  const finalSecond = postTbMc.isMulticlass ? secondClass : finalRanked[1]?.[0];
 
   const traitBadges = Object.entries(facets)
     .sort((a, b) => b[1] - a[1])
@@ -197,11 +212,11 @@ export function calculateResult(answers) {
     ranked: finalRanked,
     topClass: finalTop,
     secondClass: finalSecond,
-    topScore: finalRanked[0][1],
-    secondScore: finalRanked[1]?.[1] || 0,
-    isMulticlass: finalMc.isMulticlass,
-    topSubclass: topSubclass(subclassAccum, finalTop),
-    secondSubclass: finalMc.isMulticlass ? topSubclass(subclassAccum, finalSecond) : null,
+    topScore: finalRanked.find(([n]) => n === finalTop)?.[1] ?? 0,
+    secondScore: finalRanked.find(([n]) => n === finalSecond)?.[1] ?? 0,
+    isMulticlass: postTbMc.isMulticlass,
+    topSubclass: postTbMc.isMulticlass ? null : topSubclass(subclassAccum, finalTop),
+    secondSubclass: null,
     traitBadges,
     tbFired: tbFired.map((q) => q.id),
     subQsFired: subQs.map((q) => q.id),
@@ -288,6 +303,7 @@ export function buildCharacterNarrative(result) {
 export function getGrowthTip(result) {
   const tip = growthTips[result.topClass];
   if (!tip) return { headline: "Stretch toward what's next.", body: "Keep going." };
+  if (result.isMulticlass) return tip;
   // If subclassAccum has a clear 2nd subclass, mention it.
   const subs = result.subclassAccum?.[result.topClass] || {};
   const ranked = Object.entries(subs).sort((a, b) => b[1] - a[1]);

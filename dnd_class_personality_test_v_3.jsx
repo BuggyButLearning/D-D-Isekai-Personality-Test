@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -131,6 +131,9 @@ export default function DndClassPersonalityTestV3() {
   const [answers, setAnswers] = useState({});
   const [phase, setPhase] = useState(PHASES.INTRO);
   const [step, setStep] = useState(0);
+  // Snapshot of the result computed the moment tie-breakers complete.
+  // Frozen until reset so subclass-phase answers can't shift the queue mid-flow.
+  const [provisionalResult, setProvisionalResult] = useState(null);
 
   // Compute tie-breaker queue when baseline is complete (memoized on answers)
   const baselineComplete = useMemo(
@@ -154,17 +157,15 @@ export default function DndClassPersonalityTestV3() {
     return firedTieBreakers.every((q) => isAnswered(q, answers[q.id]));
   }, [baselineComplete, firedTieBreakers, answers]);
 
-  const provisionalResult = useMemo(() => {
-    if (!tieBreakersComplete) return null;
-    return calculateResult(answers);
-  }, [tieBreakersComplete, answers]);
+  useEffect(() => {
+    if (tieBreakersComplete && !provisionalResult) {
+      setProvisionalResult(calculateResult(answers));
+    }
+  }, [tieBreakersComplete, provisionalResult, answers]);
 
   const firedSubclassQs = useMemo(() => {
-    if (!provisionalResult) return [];
-    return pickSubclassQuestions(
-      provisionalResult.topClass,
-      provisionalResult.isMulticlass ? provisionalResult.secondClass : null
-    );
+    if (!provisionalResult || provisionalResult.isMulticlass) return [];
+    return pickSubclassQuestions(provisionalResult.topClass);
   }, [provisionalResult]);
 
   // Active question list for current phase
@@ -271,6 +272,7 @@ export default function DndClassPersonalityTestV3() {
     setAnswers({});
     setPhase(PHASES.INTRO);
     setStep(0);
+    setProvisionalResult(null);
   };
 
   const startQuiz = () => {
@@ -300,7 +302,7 @@ export default function DndClassPersonalityTestV3() {
   const primary = classData[result.topClass] || classData.Fighter;
   const secondary = classData[result.secondClass] || classData.Fighter;
   const resultTitle = result.isMulticlass ? `${result.topClass} / ${result.secondClass}` : result.topClass;
-  const subclassTitle = result.isMulticlass ? `${result.topSubclass} / ${result.secondSubclass}` : result.topSubclass;
+  const subclassTitle = result.isMulticlass ? null : result.topSubclass;
   const traitList = result.traitBadges.length ? result.traitBadges : primary.traits;
 
   const archetype = useMemo(() => getPersonaArchetype(result), [result]);
@@ -475,9 +477,11 @@ export default function DndClassPersonalityTestV3() {
                       <div className="mt-3 text-sm font-bold uppercase tracking-wider text-[#8e2c1a]">
                         {archetype}
                       </div>
-                      <div className="mt-4 flex flex-wrap gap-3">
-                        <Badge variant="outline">Subclass: {subclassTitle}</Badge>
-                      </div>
+                      {subclassTitle && (
+                        <div className="mt-4 flex flex-wrap gap-3">
+                          <Badge variant="outline">Subclass: {subclassTitle}</Badge>
+                        </div>
+                      )}
                       <p className={`mt-5 text-sm font-bold leading-7 md:text-base ${primary.accent}`}>
                         {primary.motto}
                       </p>
