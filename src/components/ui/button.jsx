@@ -2,7 +2,7 @@ import React from "react";
 
 const variants = {
   default: "bg-[#d85a24] text-[#fff2cf] hover:bg-[#ef7a32]",
-  outline: "bg-[#fff2cf] text-[#171717] hover:bg-[#ffe5c9]",
+  outline: "bg-[#F6EDCF] text-[#1F1A14] hover:bg-[#EAD6AA]",
   ghost: "bg-[#c7381d] text-[#fff2cf] hover:bg-[#df4c2a]",
 };
 

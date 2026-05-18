@@ -533,7 +533,7 @@ export default function DndClassPersonalityTestV3() {
                   className="p-5 md:p-8"
                 >
                   {sharedSnapshot && (
-                    <div className="mb-5 flex items-center gap-3 border-4 border-[#0b0b0b] bg-[#fff2cf] p-3 text-xs font-bold text-[#171717] shadow-[inset_0_0_0_3px_#8e2c1a,4px_4px_0_#0b0b0b]">
+                    <div className="mb-5 flex items-center gap-3 border-4 border-[#0b0b0b] bg-[#F7EFD2] p-3 text-xs font-bold text-[#1F1A14] shadow-[inset_0_0_0_3px_#8e2c1a,4px_4px_0_#0b0b0b]">
                       <Sparkles className="h-4 w-4 text-[#8e2c1a]" />
                       <span>Shared result from another player. Click below to take the quiz yourself.</span>
                     </div>
@@ -572,19 +572,19 @@ export default function DndClassPersonalityTestV3() {
                       <Badge className={`${primary.color}`}>
                         {viewResult.isMulticlass ? "Multiclass Result" : "Dominant Class"}
                       </Badge>
-                      <h2 className="pixel-title mt-4 break-words text-3xl font-black leading-relaxed text-[#c7381d] md:text-5xl">
+                      <h2 className="pixel-title mt-6 break-words text-3xl font-black leading-relaxed text-[#B8452D] md:text-5xl">
                         {resultTitle}
                       </h2>
-                      <div className="mt-3 text-sm font-bold uppercase tracking-wider text-[#8e2c1a]">
+                      <div className="mt-4 text-sm font-bold uppercase tracking-wider text-[#8e2c1a]">
                         {archetype}
                       </div>
                       {subclassTitle && (
-                        <div className="mt-4 flex flex-wrap gap-3">
+                        <div className="mt-5 flex flex-wrap gap-3">
                           <Badge variant="outline">Subclass: {subclassTitle}</Badge>
                         </div>
                       )}
                       {!sharedSnapshot && (
-                        <div className="mt-4 flex flex-wrap items-center gap-3">
+                        <div className="mt-5 flex flex-wrap items-center gap-3">
                           <Button
                             onClick={copyShareLink}
                             variant="outline"
@@ -604,34 +604,38 @@ export default function DndClassPersonalityTestV3() {
                                 readOnly
                                 value={visibleShareUrl}
                                 onFocus={(e) => e.target.select()}
-                                className="w-full border-2 border-[#0b0b0b] bg-[#fff2cf] px-2 py-1 text-[11px] font-mono text-[#171717]"
+                                className="w-full border-2 border-[#0b0b0b] bg-[#F7EFD2] px-2 py-1 text-[11px] font-mono text-[#1F1A14]"
                               />
                               <span className="text-[10px] text-[#727a78]">Press Ctrl+C (or ⌘C) to copy.</span>
                             </div>
                           )}
                         </div>
                       )}
-                      <p className={`mt-5 text-sm font-bold leading-7 md:text-base ${primary.accent}`}>
+                      <div
+                        className="mt-6 h-1 w-24 bg-[#B8893B] border-x-4 border-solid border-[#8A452F]"
+                        aria-hidden="true"
+                      />
+                      <p className={`mt-6 max-w-[68ch] text-sm font-bold leading-7 md:text-base ${primary.accent}`}>
                         {motto}
                       </p>
-                      <p className="mt-4 leading-7 text-[#171717]">{personalNarrative}</p>
+                      <p className="mt-4 max-w-[68ch] leading-7 text-[#1F1A14]">{personalNarrative}</p>
                       {anchor?.hobby && (
                         <div className="pixel-slot mt-5 p-4">
                           <div className="pixel-font text-[9px] font-bold uppercase tracking-wider text-[#8e2c1a]">
                             Anchor Hobby
                           </div>
-                          <div className="mt-2 text-sm font-bold leading-6 text-[#0b0b0b]">
+                          <div className="mt-2 text-sm font-bold leading-6 text-[#1F1A14]">
                             {anchor.hobby.label}
                           </div>
                           {anchor.classSignal && (
-                            <div className="mt-1 text-xs leading-5 text-[#171717]">
+                            <div className="mt-1 text-xs leading-5 text-[#1F1A14]">
                               Reads as <strong className="text-[#8e2c1a]">{anchor.classSignal}</strong> DNA.
                             </div>
                           )}
                         </div>
                       )}
                       {subclassDescriptionText && (
-                        <p className="mt-4 leading-7 text-[#171717]">
+                        <p className="mt-4 max-w-[68ch] leading-7 text-[#1F1A14]">
                           {viewResult.topSubclass && (
                             <strong className="text-[#8e2c1a]">{viewResult.topSubclass}: </strong>
                           )}
@@ -639,7 +643,7 @@ export default function DndClassPersonalityTestV3() {
                         </p>
                       )}
                       {viewResult.isMulticlass && multiclassSecondaryText && (
-                        <p className="mt-3 leading-7 text-[#171717]">{multiclassSecondaryText}</p>
+                        <p className="mt-3 max-w-[68ch] leading-7 text-[#1F1A14]">{multiclassSecondaryText}</p>
                       )}
                     </div>
                   </div>
@@ -648,15 +652,15 @@ export default function DndClassPersonalityTestV3() {
                     <div className="pixel-font text-[9px] font-bold uppercase tracking-wider text-[#8e2c1a]">
                       Your Character
                     </div>
-                    <p className="mt-3 leading-7 text-[#171717]">{characterNarrative}</p>
+                    <p className="mt-3 max-w-[68ch] leading-7 text-[#1F1A14]">{characterNarrative}</p>
                   </div>
 
                   <div className="pixel-slot mt-6 p-5 md:p-6">
                     <div className="pixel-font text-[9px] font-bold uppercase tracking-wider text-[#168a32]">
                       Growth Tip
                     </div>
-                    <div className="mt-2 text-sm font-bold leading-6 text-[#0b0b0b]">{growthTip.headline}</div>
-                    <p className="mt-2 leading-7 text-[#171717]">{growthTip.body}</p>
+                    <div className="mt-2 text-sm font-bold leading-6 text-[#1F1A14]">{growthTip.headline}</div>
+                    <p className="mt-2 max-w-[68ch] leading-7 text-[#1F1A14]">{growthTip.body}</p>
                   </div>
 
                   <div className="mt-8 grid gap-4 md:grid-cols-3">
@@ -667,9 +671,9 @@ export default function DndClassPersonalityTestV3() {
                           <div className="pixel-font text-[9px] font-bold uppercase tracking-wider text-[#8e2c1a]">
                             Trait
                           </div>
-                          <div className="mt-3 text-sm font-bold leading-6 text-[#0b0b0b]">{trait}</div>
+                          <div className="mt-3 text-sm font-bold leading-6 text-[#1F1A14]">{trait}</div>
                           {blurb && (
-                            <div className="mt-2 text-xs leading-snug text-[#3a3a3a]">{blurb}</div>
+                            <div className="mt-2 text-xs leading-snug text-[#3d3328]">{blurb}</div>
                           )}
                         </div>
                       );
@@ -677,13 +681,13 @@ export default function DndClassPersonalityTestV3() {
                   </div>
 
                   <div className="pixel-score-window mt-8 p-5 md:p-6">
-                    <h3 className="pixel-font text-sm font-bold text-[#171717]">Top class scores</h3>
+                    <h3 className="pixel-font text-sm font-bold text-[#1F1A14]">Top class scores</h3>
                     <div className="mt-5 grid gap-4">
                       {viewResult.ranked.slice(0, 5).map(([name, score]) => {
                         const pct = Math.round((score / Math.max(viewResult.topScore, 1)) * 100);
                         return (
                           <div key={name}>
-                            <div className="mb-2 flex justify-between gap-4 text-xs font-bold text-[#171717]">
+                            <div className="mb-2 flex justify-between gap-4 text-xs font-bold text-[#1F1A14]">
                               <span className="flex min-w-0 items-center gap-2">
                                 <ClassIcon name={name} size={28} className="score-class-icon" />
                                 <span className="truncate">{name}</span>
