@@ -20,7 +20,7 @@ import {
 } from "./src/engine_v3.mjs";
 import { classData, subclassData, scoreBarColors, classIconSrc } from "./src/classMetadata_v3.mjs";
 
-const PHASES = { BASELINE: "baseline", TIEBREAKER: "tiebreaker", SUBCLASS: "subclass", RESULT: "result" };
+const PHASES = { INTRO: "intro", BASELINE: "baseline", TIEBREAKER: "tiebreaker", SUBCLASS: "subclass", RESULT: "result" };
 
 function ClassIcon({ name, size = 120, className = "" }) {
   const raw = classIconSrc[name] || classIconSrc.Fighter;
@@ -129,7 +129,7 @@ function isAnswered(question, answer) {
 
 export default function DndClassPersonalityTestV3() {
   const [answers, setAnswers] = useState({});
-  const [phase, setPhase] = useState(PHASES.BASELINE);
+  const [phase, setPhase] = useState(PHASES.INTRO);
   const [step, setStep] = useState(0);
 
   // Compute tie-breaker queue when baseline is complete (memoized on answers)
@@ -269,6 +269,11 @@ export default function DndClassPersonalityTestV3() {
 
   const reset = () => {
     setAnswers({});
+    setPhase(PHASES.INTRO);
+    setStep(0);
+  };
+
+  const startQuiz = () => {
     setPhase(PHASES.BASELINE);
     setStep(0);
   };
@@ -282,7 +287,9 @@ export default function DndClassPersonalityTestV3() {
   const canAdvance = current ? isAnswered(current, currentAnswer) : phase === PHASES.RESULT;
 
   const phaseLabel =
-    phase === PHASES.BASELINE
+    phase === PHASES.INTRO
+      ? "BEFORE YOU BEGIN"
+      : phase === PHASES.BASELINE
       ? `QUEST ${String(step + 1).padStart(2, "0")} / ${baselineQuestions.length}`
       : phase === PHASES.TIEBREAKER
       ? `BONUS ROUND ${step + 1} / ${firedTieBreakers.length}`
@@ -340,7 +347,49 @@ export default function DndClassPersonalityTestV3() {
             </div>
 
             <AnimatePresence mode="wait">
-              {!showResult && current ? (
+              {phase === PHASES.INTRO ? (
+                <motion.div
+                  key="intro"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  className="p-5 md:p-8"
+                >
+                  <Badge variant="outline" className="mb-5">Before You Begin</Badge>
+                  <h2 className="text-xl font-extrabold leading-8 text-[#0b0b0b] md:text-2xl">
+                    What class did your real life build?
+                  </h2>
+                  <div className="mt-5 space-y-4 leading-7 text-[#171717]">
+                    <p>
+                      This is not a "pick your favorite vibe" quiz. The questions ask about how you actually
+                      live — how you train, learn, lead, build, serve, improvise, and gain power. Your
+                      answers map onto the 13 D&D classes (plus subclasses) the same way real strengths map
+                      onto real archetypes.
+                    </p>
+                    <p>
+                      About <strong className="text-[#8e2c1a]">12 core questions</strong> for everyone, plus
+                      a few <strong className="text-[#8e2c1a]">Bonus Rounds</strong> only if your top two
+                      classes are close. Then a <strong className="text-[#8e2c1a]">Subclass Forge</strong>{" "}
+                      to lock in your specialization. Most people finish in 5-7 minutes.
+                    </p>
+                    <p>
+                      At the end you get a class, subclass, persona archetype, a real-world read on who you
+                      are, and a fantasy character version of you. It's meant as self-reflection and
+                      entertainment — not an ability test.
+                    </p>
+                  </div>
+                  <div className="pixel-slot mt-6 p-4 text-xs leading-6 text-[#171717]">
+                    <div className="pixel-font text-[9px] font-bold uppercase tracking-wider text-[#8e2c1a]">
+                      How to answer
+                    </div>
+                    <ul className="mt-2 list-disc pl-5">
+                      <li>Pick what's <em>actually</em> true of you, not what sounds cool.</li>
+                      <li>One question is a rank-3 hobby pick. Tap your top 3 in order.</li>
+                      <li>No "I don't" escape hatches — every option says something about someone.</li>
+                    </ul>
+                  </div>
+                </motion.div>
+              ) : !showResult && current ? (
                 <motion.div
                   key={`${phase}-${step}`}
                   initial={{ opacity: 0, y: 8 }}
@@ -520,35 +569,49 @@ export default function DndClassPersonalityTestV3() {
             </AnimatePresence>
 
             <div className="pixel-strip flex flex-wrap items-center justify-between gap-4 border-t-4 p-4 md:p-6">
-              <Button
-                variant="outline"
-                onClick={back}
-                disabled={phase === PHASES.BASELINE && step === 0}
-                className="gap-2"
-              >
-                <ChevronLeft className="h-4 w-4" /> Back
-              </Button>
-              <div className="flex flex-wrap justify-end gap-3">
-                <Button variant="outline" onClick={reset} className="gap-2">
-                  Reset
-                </Button>
-                {!showResult && (
+              {phase === PHASES.INTRO ? (
+                <>
+                  <div />
                   <Button
-                    onClick={advance}
-                    disabled={!canAdvance}
-                    className="gap-2 bg-[#168a32] text-[#fff2cf] hover:bg-[#1ea83d] disabled:bg-[#2b2f31] disabled:text-[#727a78]"
+                    onClick={startQuiz}
+                    className="gap-2 bg-[#168a32] text-[#fff2cf] hover:bg-[#1ea83d]"
                   >
-                    {phase === PHASES.SUBCLASS && step === firedSubclassQs.length - 1
-                      ? "Reveal Class"
-                      : phase === PHASES.TIEBREAKER && step === firedTieBreakers.length - 1 && firedSubclassQs.length === 0
-                      ? "Reveal Class"
-                      : phase === PHASES.BASELINE && step === baselineQuestions.length - 1 && firedTieBreakers.length === 0 && firedSubclassQs.length === 0
-                      ? "Reveal Class"
-                      : "Next"}{" "}
-                    <ChevronRight className="h-4 w-4" />
+                    Begin Quiz <ChevronRight className="h-4 w-4" />
                   </Button>
-                )}
-              </div>
+                </>
+              ) : (
+                <>
+                  <Button
+                    variant="outline"
+                    onClick={back}
+                    disabled={phase === PHASES.BASELINE && step === 0}
+                    className="gap-2"
+                  >
+                    <ChevronLeft className="h-4 w-4" /> Back
+                  </Button>
+                  <div className="flex flex-wrap justify-end gap-3">
+                    <Button variant="outline" onClick={reset} className="gap-2">
+                      Reset
+                    </Button>
+                    {!showResult && (
+                      <Button
+                        onClick={advance}
+                        disabled={!canAdvance}
+                        className="gap-2 bg-[#168a32] text-[#fff2cf] hover:bg-[#1ea83d] disabled:bg-[#2b2f31] disabled:text-[#727a78]"
+                      >
+                        {phase === PHASES.SUBCLASS && step === firedSubclassQs.length - 1
+                          ? "Reveal Class"
+                          : phase === PHASES.TIEBREAKER && step === firedTieBreakers.length - 1 && firedSubclassQs.length === 0
+                          ? "Reveal Class"
+                          : phase === PHASES.BASELINE && step === baselineQuestions.length - 1 && firedTieBreakers.length === 0 && firedSubclassQs.length === 0
+                          ? "Reveal Class"
+                          : "Next"}{" "}
+                        <ChevronRight className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
+                </>
+              )}
             </div>
           </CardContent>
         </Card>
