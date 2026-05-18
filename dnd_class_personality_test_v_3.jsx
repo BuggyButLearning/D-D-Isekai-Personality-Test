@@ -721,17 +721,17 @@ export default function DndClassPersonalityTestV3() {
                 </>
               ) : (
                 <>
-                  <Button
-                    variant="outline"
-                    onClick={back}
-                    disabled={phase === PHASES.BASELINE && step === 0}
-                    className="gap-2"
-                  >
-                    <ChevronLeft className="h-4 w-4" /> Back
+                  <Button variant="outline" onClick={reset} className="gap-2">
+                    Reset
                   </Button>
                   <div className="flex flex-wrap justify-end gap-3">
-                    <Button variant="outline" onClick={reset} className="gap-2">
-                      Reset
+                    <Button
+                      variant="outline"
+                      onClick={back}
+                      disabled={phase === PHASES.BASELINE && step === 0}
+                      className="gap-2"
+                    >
+                      <ChevronLeft className="h-4 w-4" /> Back
                     </Button>
                     {!showResult && (
                       <Button
