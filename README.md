@@ -1,4 +1,32 @@
-# D&D Isekai Personality Test
+<p align="center">
+  <img src="public/class-icons/wizard.png" alt="D&D Isekai Personality Test" width="220" />
+</p>
+
+<h1 align="center">D&D Isekai Personality Test</h1>
+
+<p align="center"><em>What class did your real life build?</em></p>
+
+<p align="center">
+  <img src="public/class-icons/artificer.png" width="56" alt="Artificer" />
+  <img src="public/class-icons/barbarian.png" width="56" alt="Barbarian" />
+  <img src="public/class-icons/bard.png" width="56" alt="Bard" />
+  <img src="public/class-icons/cleric.png" width="56" alt="Cleric" />
+  <img src="public/class-icons/druid.png" width="56" alt="Druid" />
+  <img src="public/class-icons/fighter.png" width="56" alt="Fighter" />
+  <img src="public/class-icons/monk.png" width="56" alt="Monk" />
+  <img src="public/class-icons/paladin.png" width="56" alt="Paladin" />
+  <img src="public/class-icons/ranger.png" width="56" alt="Ranger" />
+  <img src="public/class-icons/rogue.png" width="56" alt="Rogue" />
+  <img src="public/class-icons/sorcerer.png" width="56" alt="Sorcerer" />
+  <img src="public/class-icons/warlock.png" width="56" alt="Warlock" />
+  <img src="public/class-icons/wizard.png" width="56" alt="Wizard" />
+</p>
+
+<p align="center">
+  <a href="https://buggybutlearning.github.io/D-D-Isekai-Personality-Test/"><strong>Play the quiz →</strong></a>
+</p>
+
+---
 
 A web-based personality quiz that maps real-life behavior to a Dungeons & Dragons 2024 class and subclass. Built with React + Vite + Tailwind CSS, with animated transitions via Framer Motion.
 
@@ -66,7 +94,7 @@ To enable on a fresh clone: Repo Settings → Pages → Source = **GitHub Action
 
 ## Status
 
-Active development. The v2 quiz file is the current working version.
+Active development. v3 (branching engine + adaptive tie-breakers + narrative result page) is the deployed version. v2 archived at [`archive/dnd_class_personality_test_v_2.jsx`](archive/dnd_class_personality_test_v_2.jsx).
 
 ## License
 
