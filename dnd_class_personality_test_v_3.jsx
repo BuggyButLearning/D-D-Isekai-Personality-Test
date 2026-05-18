@@ -18,7 +18,10 @@ import { classData, subclassData, scoreBarColors, classIconSrc } from "./src/cla
 const PHASES = { BASELINE: "baseline", TIEBREAKER: "tiebreaker", SUBCLASS: "subclass", RESULT: "result" };
 
 function ClassIcon({ name, size = 120, className = "" }) {
-  const src = classIconSrc[name] || classIconSrc.Fighter;
+  const raw = classIconSrc[name] || classIconSrc.Fighter;
+  const fileName = raw.replace(/^\//, "");
+  const base = import.meta.env?.BASE_URL ?? "/";
+  const src = `${base}${fileName}`;
   return (
     <img
       src={src}
