@@ -623,6 +623,9 @@ export default function DndClassPersonalityTestV3() {
         <p className="mt-6 border-4 border-[#0b0b0b] bg-[#fff2cf] p-3 text-center text-[10px] leading-5 text-[#171717] shadow-[inset_0_0_0_3px_#d85a24,4px_4px_0_#0b0b0b]">
           Built as entertainment and self reflection — not a clinical, hiring, or ability assessment.
         </p>
+        <p className="mt-2 text-center text-[9px] font-bold uppercase tracking-wider text-[#727a78]">
+          build {__APP_VERSION__} · {__BUILD_DATE__}
+        </p>
       </div>
     </div>
   );
