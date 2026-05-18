@@ -25,8 +25,9 @@ export const HOBBIES = [
   { id: "hike",       label: "Hiking, backpacking, navigating trails",       scores: { Ranger: 4 }, subclassTags: { Ranger: { Hunter: 1, "Winter Walker": 1 } } },
   { id: "hunt",       label: "Hunting, fishing, tracking",                   scores: { Ranger: 3, Barbarian: 1 }, subclassTags: { Ranger: { Hunter: 2 } } },
   { id: "lift",       label: "Lifting weights, powerlifting, strongman",     scores: { Barbarian: 3, Fighter: 1 }, subclassTags: { Barbarian: { Berserker: 1 }, Fighter: { Champion: 1 } } },
-  { id: "combat",     label: "Contact sports, boxing, MMA, rugby",           scores: { Barbarian: 2, Fighter: 2 }, subclassTags: { Fighter: { Champion: 1 }, Barbarian: { Berserker: 1 } } },
-  { id: "martial",    label: "Martial arts, jiu-jitsu, taekwondo",           scores: { Monk: 4 }, subclassTags: { Monk: { "Open Hand": 2 } } },
+  { id: "combat",     label: "Full-collision contact sports — boxing, MMA, rugby, hockey", scores: { Barbarian: 2, Fighter: 2 }, subclassTags: { Fighter: { Champion: 1 }, Barbarian: { Berserker: 1 } } },
+  { id: "team_sport", label: "Team sports — football, basketball, soccer, baseball", scores: { Fighter: 3, Paladin: 1, Bard: 1 }, subclassTags: { Fighter: { Banneret: 2, Champion: 1 }, Paladin: { Glory: 1 }, Bard: { Valor: 1 } } },
+  { id: "martial",    label: "Disciplined martial training — kata, drills, technique", scores: { Monk: 4 }, subclassTags: { Monk: { "Open Hand": 2 } } },
   { id: "yoga",       label: "Yoga, breathwork, meditation",                 scores: { Monk: 3, Cleric: 1 }, subclassTags: { Monk: { Mercy: 1, "Open Hand": 1 } } },
   { id: "run",        label: "Running, cycling, endurance training",         scores: { Fighter: 2, Ranger: 1, Monk: 1 } },
   { id: "music",      label: "Playing instrument, singing, songwriting",     scores: { Bard: 3, Sorcerer: 1 }, subclassTags: { Bard: { Lore: 1, Valor: 1 } } },
@@ -50,6 +51,7 @@ export const HOBBIES = [
   { id: "stealth",    label: "Lockpicking, urban exploration, parkour",      scores: { Rogue: 3, Monk: 1 }, subclassTags: { Rogue: { Thief: 2 } } },
   { id: "collect",    label: "Collecting — vinyl, cards, antiques, rare X",  scores: { Wizard: 1, Warlock: 1 } },
   { id: "tabletop",   label: "Tabletop RPGs, D&D, complex board games",      scores: { Wizard: 1, Rogue: 1 } },
+  { id: "videogames", label: "Video games — RPGs, strategy, FPS, sandbox, MMOs", scores: { Wizard: 1, Rogue: 1, Artificer: 1, Fighter: 1 }, subclassTags: { Wizard: { Diviner: 1 }, Artificer: { "Battle Smith": 1 } } },
 ];
 
 // ---------------------------------------------------------------------------
