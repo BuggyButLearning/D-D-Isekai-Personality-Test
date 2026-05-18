@@ -55,7 +55,8 @@ for (const cls of CLASSES) {
     sunday: { ranked: ["read", "research", "code"] },
   };
   // fill other baseline answers with first option to allow scoreBaseline
-  for (const q of baselineQuestions.slice(1)) {
+  for (const q of baselineQuestions) {
+    if (q.id === "sunday") continue;
     answers[q.id] = { choice: 0 };
   }
   const r = scoreBaseline(answers);

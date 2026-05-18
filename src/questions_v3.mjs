@@ -59,17 +59,7 @@ export const HOBBIES = [
 // ---------------------------------------------------------------------------
 
 export const baselineQuestions = [
-  // Q1 — Sunday hobby ranking (special type)
-  {
-    id: "sunday",
-    type: "rank3",
-    section: "Life Pattern",
-    text: "Pick your top 3 most-honest answers — what you'd actually do with a free Sunday. Rank them.",
-    instruction: "Tap 3 in order: most likely first.",
-    options: HOBBIES, // user picks 3, scored x3 / x2 / x1
-  },
-
-  // Q2 — Power source via helping a friend (replaces v2 Q13/Q14)
+  // Q1 — Power source via helping a friend (warmup; single-choice)
   {
     id: "help_friend",
     type: "single",
@@ -85,7 +75,7 @@ export const baselineQuestions = [
     ],
   },
 
-  // Q3 — Learning a new hard skill (replaces v2 Q5)
+  // Q2 — Learning a new hard skill (warmup; single-choice)
   {
     id: "learn_welding",
     type: "single",
@@ -99,6 +89,16 @@ export const baselineQuestions = [
       { label: "Build a jig and a personal checklist after the first burn so it stays fixed", ...s({ Artificer: 3, Fighter: 1 }, { Artificer: { Armorer: 1, "Battle Smith": 1 } }, ["Builder"]) },
       { label: "Practice the same single bead daily until my hand stops shaking", ...s({ Monk: 4, Druid: 1 }, { Monk: { "Open Hand": 2 } }, ["Disciplined"]) },
     ],
+  },
+
+  // Q3 — Sunday hobby ranking (rank-3; moved from Q1 so users warm up first)
+  {
+    id: "sunday",
+    type: "rank3",
+    section: "Life Pattern",
+    text: "What would you actually do with a free Sunday? Pick up to 3 — most likely first.",
+    instruction: "Tap up to 3 in order. Even 1 counts if nothing else really fits.",
+    options: HOBBIES, // user picks 1-3, ranks scored x3 / x2 / x1
   },
 
   // Q4 — Physical mode (merged v2 Q3+Q4)

@@ -96,7 +96,7 @@ function HobbyRankQuestion({ question, answer, onChange }) {
         })}
       </div>
       <div className="mt-3 text-[10px] font-bold uppercase tracking-wider text-[#727a78]">
-        Picked {ranked.length}/3
+        Picked {ranked.length} of 3 max · {ranked.length === 0 ? "pick at least 1" : "ready to continue"}
       </div>
     </div>
   );
@@ -130,7 +130,7 @@ function SingleChoiceQuestion({ question, answer, onChange }) {
 
 function isAnswered(question, answer) {
   if (!answer) return false;
-  if (question.type === "rank3") return (answer.ranked || []).length === 3;
+  if (question.type === "rank3") return (answer.ranked || []).length >= 1;
   return typeof answer.choice === "number";
 }
 
