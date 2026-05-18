@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { ChevronLeft, ChevronRight, Sparkles, Star } from "lucide-react";
+import { ChevronLeft, ChevronRight, Share2, Sparkles, Star } from "lucide-react";
 
 import { CLASSES, baselineQuestions, tieBreakerPool, subclassFlavorPool, HOBBIES } from "./src/questions_v3.mjs";
 import {
@@ -19,6 +19,13 @@ import {
   getGrowthTip,
 } from "./src/engine_v3.mjs";
 import { classData, subclassData, scoreBarColors, classIconSrc } from "./src/classMetadata_v3.mjs";
+import {
+  buildSnapshot,
+  encodeSnapshot,
+  decodeSnapshot,
+  snapshotToResult,
+  snapshotToAnswers,
+} from "./src/shareCode.mjs";
 
 const PHASES = { INTRO: "intro", BASELINE: "baseline", TIEBREAKER: "tiebreaker", SUBCLASS: "subclass", RESULT: "result" };
 
@@ -134,6 +141,25 @@ export default function DndClassPersonalityTestV3() {
   // Snapshot of the result computed the moment tie-breakers complete.
   // Frozen until reset so subclass-phase answers can't shift the queue mid-flow.
   const [provisionalResult, setProvisionalResult] = useState(null);
+  // Result loaded from a #c=... share link, if any.
+  const [sharedSnapshot, setSharedSnapshot] = useState(null);
+  // Share UI transient state.
+  const [copyState, setCopyState] = useState("idle"); // idle | copied | fallback
+  const [visibleShareUrl, setVisibleShareUrl] = useState("");
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const m = window.location.hash.match(/^#c=(.+)$/);
+    if (!m) return;
+    try {
+      const snap = decodeSnapshot(m[1]);
+      setSharedSnapshot(snap);
+      setPhase(PHASES.RESULT);
+    } catch (err) {
+      console.warn("[share] failed to decode share code:", err.message);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Compute tie-breaker queue when baseline is complete (memoized on answers)
   const baselineComplete = useMemo(
@@ -299,17 +325,85 @@ export default function DndClassPersonalityTestV3() {
       ? `SUBCLASS FORGE ${step + 1} / ${firedSubclassQs.length}`
       : "CHAR SHEET";
 
-  const primary = classData[result.topClass] || classData.Fighter;
-  const secondary = classData[result.secondClass] || classData.Fighter;
-  const resultTitle = result.isMulticlass ? `${result.topClass} / ${result.secondClass}` : result.topClass;
-  const subclassTitle = result.isMulticlass ? null : result.topSubclass;
-  const traitList = result.traitBadges.length ? result.traitBadges : primary.traits;
+  // When viewing a shared snapshot, route everything through the synthesized
+  // result/answers so the existing render path works unchanged. Frozen
+  // narrative text from the snapshot wins over live re-derivation.
+  const viewResult = sharedSnapshot ? snapshotToResult(sharedSnapshot) : result;
+  const viewAnswers = sharedSnapshot ? snapshotToAnswers(sharedSnapshot) : answers;
 
-  const archetype = useMemo(() => getPersonaArchetype(result), [result]);
-  const anchor = useMemo(() => getAnchorHobby(answers), [answers]);
-  const personalNarrative = useMemo(() => buildPersonalNarrative(result, answers), [result, answers]);
-  const characterNarrative = useMemo(() => buildCharacterNarrative(result), [result]);
-  const growthTip = useMemo(() => getGrowthTip(result), [result]);
+  const primary = classData[viewResult.topClass] || classData.Fighter;
+  const secondary = classData[viewResult.secondClass] || classData.Fighter;
+  const resultTitle = viewResult.isMulticlass ? `${viewResult.topClass} / ${viewResult.secondClass}` : viewResult.topClass;
+  const subclassTitle = viewResult.isMulticlass ? null : viewResult.topSubclass;
+  const traitList = viewResult.traitBadges.length ? viewResult.traitBadges : primary.traits;
+
+  const archetype = useMemo(
+    () => sharedSnapshot?.ar || getPersonaArchetype(viewResult),
+    [sharedSnapshot, viewResult]
+  );
+  const anchor = useMemo(() => getAnchorHobby(viewAnswers), [viewAnswers]);
+  const personalNarrative = useMemo(
+    () => sharedSnapshot?.pn || buildPersonalNarrative(viewResult, viewAnswers),
+    [sharedSnapshot, viewResult, viewAnswers]
+  );
+  const characterNarrative = useMemo(
+    () => sharedSnapshot?.cn || buildCharacterNarrative(viewResult),
+    [sharedSnapshot, viewResult]
+  );
+  const growthTip = useMemo(() => {
+    if (sharedSnapshot) {
+      return { headline: sharedSnapshot.gh || "", body: sharedSnapshot.gb || "" };
+    }
+    return getGrowthTip(viewResult);
+  }, [sharedSnapshot, viewResult]);
+  const motto = sharedSnapshot?.mo || primary.motto;
+  const subclassDescriptionText = sharedSnapshot
+    ? sharedSnapshot.sd
+    : (!viewResult.isMulticlass && viewResult.topSubclass && subclassData[viewResult.topClass]?.[viewResult.topSubclass]) || null;
+  const multiclassSecondaryText = sharedSnapshot
+    ? sharedSnapshot.ms
+    : viewResult.isMulticlass && viewResult.secondClass
+      ? `Your second class is not just flavor. ${viewResult.secondClass} scored close enough to count as a true secondary path. ${secondary.summary}`
+      : null;
+
+  async function copyShareLink() {
+    const snap = buildSnapshot(result, answers);
+    const code = encodeSnapshot(snap);
+    const base = import.meta.env?.BASE_URL ?? "/";
+    const url = `${location.origin}${base}r/${result.topClass}/#c=${code}`;
+    if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
+      try {
+        await navigator.share({ title: "My D&D class", url });
+        setCopyState("copied");
+        setTimeout(() => setCopyState("idle"), 2000);
+        return;
+      } catch {
+        /* user cancelled or unsupported, fall through */
+      }
+    }
+    if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(url);
+        setCopyState("copied");
+        setTimeout(() => setCopyState("idle"), 2000);
+        return;
+      } catch {
+        /* permission denied, fall through */
+      }
+    }
+    setVisibleShareUrl(url);
+    setCopyState("fallback");
+  }
+
+  function exitSharedView() {
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+    setSharedSnapshot(null);
+    setCopyState("idle");
+    setVisibleShareUrl("");
+    reset();
+  }
 
   const showResult = phase === PHASES.RESULT;
   const showBonusBanner = phase === PHASES.TIEBREAKER && step === 0;
@@ -437,14 +531,20 @@ export default function DndClassPersonalityTestV3() {
                   exit={{ opacity: 0, y: -8 }}
                   className="p-5 md:p-8"
                 >
+                  {sharedSnapshot && (
+                    <div className="mb-5 flex items-center gap-3 border-4 border-[#0b0b0b] bg-[#fff2cf] p-3 text-xs font-bold text-[#171717] shadow-[inset_0_0_0_3px_#8e2c1a,4px_4px_0_#0b0b0b]">
+                      <Sparkles className="h-4 w-4 text-[#8e2c1a]" />
+                      <span>Shared result from another player. Click below to take the quiz yourself.</span>
+                    </div>
+                  )}
                   <div className="grid gap-8 md:grid-cols-[224px_1fr] md:items-center">
-                    {result.isMulticlass ? (
+                    {viewResult.isMulticlass ? (
                       <div
                         className="multiclass-portraits mx-auto"
-                        aria-label={`${result.topClass} and ${result.secondClass} class icons`}
+                        aria-label={`${viewResult.topClass} and ${viewResult.secondClass} class icons`}
                       >
                         <ClassPortrait
-                          name={result.topClass}
+                          name={viewResult.topClass}
                           classInfo={primary}
                           size={124}
                           className="class-portrait-dual class-portrait-primary"
@@ -453,7 +553,7 @@ export default function DndClassPersonalityTestV3() {
                           /
                         </div>
                         <ClassPortrait
-                          name={result.secondClass}
+                          name={viewResult.secondClass}
                           classInfo={secondary}
                           size={112}
                           className="class-portrait-dual class-portrait-secondary"
@@ -461,7 +561,7 @@ export default function DndClassPersonalityTestV3() {
                       </div>
                     ) : (
                       <ClassPortrait
-                        name={result.topClass}
+                        name={viewResult.topClass}
                         classInfo={primary}
                         size={156}
                         className="mx-auto h-52 w-52"
@@ -469,7 +569,7 @@ export default function DndClassPersonalityTestV3() {
                     )}
                     <div className="min-w-0">
                       <Badge className={`${primary.color}`}>
-                        {result.isMulticlass ? "Multiclass Result" : "Dominant Class"}
+                        {viewResult.isMulticlass ? "Multiclass Result" : "Dominant Class"}
                       </Badge>
                       <h2 className="pixel-title mt-4 break-words text-3xl font-black leading-relaxed text-[#c7381d] md:text-5xl">
                         {resultTitle}
@@ -482,8 +582,36 @@ export default function DndClassPersonalityTestV3() {
                           <Badge variant="outline">Subclass: {subclassTitle}</Badge>
                         </div>
                       )}
+                      {!sharedSnapshot && (
+                        <div className="mt-4 flex flex-wrap items-center gap-3">
+                          <Button
+                            onClick={copyShareLink}
+                            variant="outline"
+                            className="gap-2"
+                          >
+                            {copyState === "copied" ? (
+                              <>Copied!</>
+                            ) : (
+                              <>
+                                <Share2 className="h-4 w-4" /> Copy share link
+                              </>
+                            )}
+                          </Button>
+                          {copyState === "fallback" && visibleShareUrl && (
+                            <div className="flex w-full flex-col gap-1">
+                              <input
+                                readOnly
+                                value={visibleShareUrl}
+                                onFocus={(e) => e.target.select()}
+                                className="w-full border-2 border-[#0b0b0b] bg-[#fff2cf] px-2 py-1 text-[11px] font-mono text-[#171717]"
+                              />
+                              <span className="text-[10px] text-[#727a78]">Press Ctrl+C (or ⌘C) to copy.</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
                       <p className={`mt-5 text-sm font-bold leading-7 md:text-base ${primary.accent}`}>
-                        {primary.motto}
+                        {motto}
                       </p>
                       <p className="mt-4 leading-7 text-[#171717]">{personalNarrative}</p>
                       {anchor?.hobby && (
@@ -501,18 +629,16 @@ export default function DndClassPersonalityTestV3() {
                           )}
                         </div>
                       )}
-                      {result.topSubclass && subclassData[result.topClass]?.[result.topSubclass] && (
+                      {subclassDescriptionText && (
                         <p className="mt-4 leading-7 text-[#171717]">
-                          <strong className="text-[#8e2c1a]">{result.topSubclass}:</strong>{" "}
-                          {subclassData[result.topClass][result.topSubclass]}
+                          {viewResult.topSubclass && (
+                            <strong className="text-[#8e2c1a]">{viewResult.topSubclass}: </strong>
+                          )}
+                          {subclassDescriptionText}
                         </p>
                       )}
-                      {result.isMulticlass && (
-                        <p className="mt-3 leading-7 text-[#171717]">
-                          Your second class is not just flavor.{" "}
-                          <strong className="text-[#8e2c1a]">{result.secondClass}</strong> scored close enough to
-                          count as a true secondary path. {secondary.summary}
-                        </p>
+                      {viewResult.isMulticlass && multiclassSecondaryText && (
+                        <p className="mt-3 leading-7 text-[#171717]">{multiclassSecondaryText}</p>
                       )}
                     </div>
                   </div>
@@ -546,8 +672,8 @@ export default function DndClassPersonalityTestV3() {
                   <div className="pixel-score-window mt-8 p-5 md:p-6">
                     <h3 className="pixel-font text-sm font-bold text-[#171717]">Top class scores</h3>
                     <div className="mt-5 grid gap-4">
-                      {result.ranked.slice(0, 5).map(([name, score]) => {
-                        const pct = Math.round((score / Math.max(result.topScore, 1)) * 100);
+                      {viewResult.ranked.slice(0, 5).map(([name, score]) => {
+                        const pct = Math.round((score / Math.max(viewResult.topScore, 1)) * 100);
                         return (
                           <div key={name}>
                             <div className="mb-2 flex justify-between gap-4 text-xs font-bold text-[#171717]">
@@ -573,7 +699,17 @@ export default function DndClassPersonalityTestV3() {
             </AnimatePresence>
 
             <div className="pixel-strip flex flex-wrap items-center justify-between gap-4 border-t-4 p-4 md:p-6">
-              {phase === PHASES.INTRO ? (
+              {sharedSnapshot ? (
+                <>
+                  <div />
+                  <Button
+                    onClick={exitSharedView}
+                    className="gap-2 bg-[#168a32] text-[#fff2cf] hover:bg-[#1ea83d]"
+                  >
+                    Take the quiz yourself <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </>
+              ) : phase === PHASES.INTRO ? (
                 <>
                   <div />
                   <Button

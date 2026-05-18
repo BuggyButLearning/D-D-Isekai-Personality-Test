@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/build_og_routes.mjs",
     "preview": "vite preview",
     "test": "node src/selftest_v3.mjs"
   },
@@ -15,6 +15,7 @@
   "dependencies": {
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.16.0",
+    "lz-string": "^1.5.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
   },

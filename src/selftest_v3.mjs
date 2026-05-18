@@ -201,6 +201,76 @@ for (const cls of CLASSES) {
   assert(typeof character === "string", `buildCharacterNarrative tolerates empty result`);
 }
 
+// 15. shareCode: round-trip + tamper + version + unknown-class
+{
+  const { buildSnapshot, encodeSnapshot, decodeSnapshot, snapshotToResult, snapshotToAnswers, SHARE_VERSION } = await import("./shareCode.mjs");
+
+  const wizardAnswers = {};
+  for (const q of baselineQuestions) {
+    if (q.type === "rank3") {
+      wizardAnswers[q.id] = { ranked: ["read", "research", "chess"] };
+    } else {
+      let bestIdx = 0, bestScore = -Infinity;
+      q.options.forEach((opt, i) => {
+        const s = opt.scores?.Wizard || 0;
+        if (s > bestScore) { bestScore = s; bestIdx = i; }
+      });
+      wizardAnswers[q.id] = { choice: bestIdx };
+    }
+  }
+  const wResult = calculateResult(wizardAnswers);
+  const snap = buildSnapshot(wResult, wizardAnswers);
+  const code = encodeSnapshot(snap);
+
+  assert(typeof code === "string" && code.length > 0, `encodeSnapshot returns non-empty string`);
+  assert(code.length < 1500, `encoded code under length budget (got ${code.length})`);
+  assert(code.includes("."), `encoded code carries a checksum (got ${code})`);
+
+  const decoded = decodeSnapshot(code);
+  assert(decoded.v === SHARE_VERSION, `decoded share version matches`);
+  assert(decoded.t === wResult.topClass, `topClass round-trips (got ${decoded.t})`);
+  assert(decoded.pn === snap.pn, `personal narrative round-trips`);
+  assert(decoded.cn === snap.cn, `character narrative round-trips`);
+  assert(Array.isArray(decoded.tr) && decoded.tr.length <= 3, `traits round-trip as array`);
+  assert(Array.isArray(decoded.r) && decoded.r.length > 0, `ranked round-trips`);
+
+  // Synthetic result/answers from snapshot should let the engine helpers run cleanly
+  const synthResult = snapshotToResult(decoded);
+  const synthAnswers = snapshotToAnswers(decoded);
+  assert(synthResult.topClass === wResult.topClass, `snapshotToResult preserves topClass`);
+  assert(synthResult.isMulticlass === wResult.isMulticlass, `snapshotToResult preserves multiclass flag`);
+  const synthAnchor = getAnchorHobby(synthAnswers);
+  assert(synthAnchor?.hobby?.id === wizardAnswers.sunday.ranked[0], `anchor hobby resolves from synthetic answers`);
+
+  // Tamper: flip one char in the compressed body (before the dot)
+  const dot = code.lastIndexOf(".");
+  const tampered = (code[0] === "A" ? "B" : "A") + code.slice(1, dot) + code.slice(dot);
+  let threw = false;
+  try { decodeSnapshot(tampered); } catch { threw = true; }
+  assert(threw, `decodeSnapshot rejects tampered payload`);
+
+  // Tamper checksum
+  let threw2 = false;
+  try { decodeSnapshot(code.slice(0, dot) + ".zzzz"); } catch { threw2 = true; }
+  assert(threw2, `decodeSnapshot rejects wrong checksum`);
+
+  // Garbage input
+  let threw3 = false;
+  try { decodeSnapshot("not a real code"); } catch { threw3 = true; }
+  assert(threw3, `decodeSnapshot rejects garbage input`);
+
+  // Unknown class via direct JSON injection (manual construction)
+  // Confirm validator catches it by hand-building a payload with bogus class
+  const LZString = (await import("lz-string")).default;
+  const fnv1a16 = (s) => { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = (h + (h<<1) + (h<<4) + (h<<7) + (h<<8) + (h<<24)) >>> 0; } return h & 0xffff; };
+  const bogusJson = JSON.stringify({ v: SHARE_VERSION, t: "Necromancer", s: null, m: 0, sc: null, tr: [], h: null, ar: "", mo: "", pn: "", cn: "", gh: "", gb: "", sd: null, ms: null, r: [] });
+  const bogusCompressed = LZString.compressToEncodedURIComponent(bogusJson);
+  const bogusChecksum = fnv1a16(bogusCompressed).toString(36).padStart(4, "0");
+  let threw4 = false;
+  try { decodeSnapshot(`${bogusCompressed}.${bogusChecksum}`); } catch { threw4 = true; }
+  assert(threw4, `decodeSnapshot rejects unknown class`);
+}
+
 if (failures > 0) {
   console.error(`\n${failures} test(s) failed.`);
   process.exit(1);
