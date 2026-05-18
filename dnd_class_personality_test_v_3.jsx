@@ -12,6 +12,11 @@ import {
   scoreBaseline,
   pickTieBreakers,
   pickSubclassQuestions,
+  getAnchorHobby,
+  getPersonaArchetype,
+  buildPersonalNarrative,
+  buildCharacterNarrative,
+  getGrowthTip,
 } from "./src/engine_v3.mjs";
 import { classData, subclassData, scoreBarColors, classIconSrc } from "./src/classMetadata_v3.mjs";
 
@@ -291,6 +296,12 @@ export default function DndClassPersonalityTestV3() {
   const subclassTitle = result.isMulticlass ? `${result.topSubclass} / ${result.secondSubclass}` : result.topSubclass;
   const traitList = result.traitBadges.length ? result.traitBadges : primary.traits;
 
+  const archetype = useMemo(() => getPersonaArchetype(result), [result]);
+  const anchor = useMemo(() => getAnchorHobby(answers), [answers]);
+  const personalNarrative = useMemo(() => buildPersonalNarrative(result, answers), [result, answers]);
+  const characterNarrative = useMemo(() => buildCharacterNarrative(result), [result]);
+  const growthTip = useMemo(() => getGrowthTip(result), [result]);
+
   const showResult = phase === PHASES.RESULT;
   const showBonusBanner = phase === PHASES.TIEBREAKER && step === 0;
   const showSubclassBanner = phase === PHASES.SUBCLASS && step === 0;
@@ -412,15 +423,33 @@ export default function DndClassPersonalityTestV3() {
                       <h2 className="pixel-title mt-4 break-words text-3xl font-black leading-relaxed text-[#c7381d] md:text-5xl">
                         {resultTitle}
                       </h2>
+                      <div className="mt-3 text-sm font-bold uppercase tracking-wider text-[#8e2c1a]">
+                        {archetype}
+                      </div>
                       <div className="mt-4 flex flex-wrap gap-3">
                         <Badge variant="outline">Subclass: {subclassTitle}</Badge>
                       </div>
                       <p className={`mt-5 text-sm font-bold leading-7 md:text-base ${primary.accent}`}>
                         {primary.motto}
                       </p>
-                      <p className="mt-4 leading-7 text-[#171717]">{primary.summary}</p>
+                      <p className="mt-4 leading-7 text-[#171717]">{personalNarrative}</p>
+                      {anchor?.hobby && (
+                        <div className="pixel-slot mt-5 p-4">
+                          <div className="pixel-font text-[9px] font-bold uppercase tracking-wider text-[#8e2c1a]">
+                            Anchor Hobby
+                          </div>
+                          <div className="mt-2 text-sm font-bold leading-6 text-[#0b0b0b]">
+                            {anchor.hobby.label}
+                          </div>
+                          {anchor.classSignal && (
+                            <div className="mt-1 text-xs leading-5 text-[#171717]">
+                              Reads as <strong className="text-[#8e2c1a]">{anchor.classSignal}</strong> DNA.
+                            </div>
+                          )}
+                        </div>
+                      )}
                       {result.topSubclass && subclassData[result.topClass]?.[result.topSubclass] && (
-                        <p className="mt-3 leading-7 text-[#171717]">
+                        <p className="mt-4 leading-7 text-[#171717]">
                           <strong className="text-[#8e2c1a]">{result.topSubclass}:</strong>{" "}
                           {subclassData[result.topClass][result.topSubclass]}
                         </p>
@@ -435,11 +464,26 @@ export default function DndClassPersonalityTestV3() {
                     </div>
                   </div>
 
+                  <div className="pixel-plaque mt-8 p-5 md:p-6">
+                    <div className="pixel-font text-[9px] font-bold uppercase tracking-wider text-[#8e2c1a]">
+                      Your Character
+                    </div>
+                    <p className="mt-3 leading-7 text-[#171717]">{characterNarrative}</p>
+                  </div>
+
+                  <div className="pixel-slot mt-6 p-5 md:p-6">
+                    <div className="pixel-font text-[9px] font-bold uppercase tracking-wider text-[#168a32]">
+                      Growth Tip
+                    </div>
+                    <div className="mt-2 text-sm font-bold leading-6 text-[#0b0b0b]">{growthTip.headline}</div>
+                    <p className="mt-2 leading-7 text-[#171717]">{growthTip.body}</p>
+                  </div>
+
                   <div className="mt-8 grid gap-4 md:grid-cols-3">
                     {traitList.map((trait) => (
                       <div key={trait} className="pixel-slot p-5">
                         <div className="pixel-font text-[9px] font-bold uppercase tracking-wider text-[#8e2c1a]">
-                          Item Slot
+                          Trait
                         </div>
                         <div className="mt-3 text-sm font-bold leading-6 text-[#0b0b0b]">{trait}</div>
                       </div>

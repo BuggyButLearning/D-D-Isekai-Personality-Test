@@ -206,5 +206,97 @@ export function calculateResult(answers) {
     tbFired: tbFired.map((q) => q.id),
     subQsFired: subQs.map((q) => q.id),
     baselineRanked,
+    subclassAccum,
+    facets,
   };
+}
+
+// ---------------------------------------------------------------------------
+// Insight helpers — render-time builders that turn data already in `result`
+// + `answers` into human-readable narrative pieces for the result page.
+// ---------------------------------------------------------------------------
+
+import { classData, personalNarratives, characterNarratives, characterSubclassPhrases, growthTips } from "./classMetadata_v3.mjs";
+
+// Returns { hobby, classSignal } for user's #1 ranked hobby. Null if none picked.
+export function getAnchorHobby(answers) {
+  const ranked = answers?.sunday?.ranked || [];
+  if (!ranked.length) return null;
+  const hobby = HOBBIES.find((h) => h.id === ranked[0]);
+  if (!hobby) return null;
+  const entries = Object.entries(hobby.scores || {});
+  if (!entries.length) return { hobby, classSignal: null };
+  entries.sort((a, b) => b[1] - a[1]);
+  return { hobby, classSignal: entries[0][0] };
+}
+
+// Returns archetype string like "The Documented Maker" or just class trait when no facets.
+export function getPersonaArchetype(result) {
+  const traits = classData[result.topClass]?.traits || [];
+  const badges = result.traitBadges || [];
+  // De-dupe: if first badge matches first class trait word, drop it.
+  const lead = badges[0];
+  const second = traits[0];
+  if (!lead && !second) return `The ${result.topClass}`;
+  if (!lead) return `The ${second}`;
+  if (!second || lead.toLowerCase().includes(second.toLowerCase()) || second.toLowerCase().includes(lead.toLowerCase())) {
+    return `The ${lead}`;
+  }
+  return `The ${lead} ${second}`;
+}
+
+// Sentence describing the user's facets in natural language.
+function facetSentence(traitBadges) {
+  if (!traitBadges?.length) return "";
+  if (traitBadges.length === 1) return `Your strongest signal is ${traitBadges[0]}.`;
+  if (traitBadges.length === 2) return `Your strongest signals are ${traitBadges[0]} and ${traitBadges[1]}.`;
+  return `Your strongest signals are ${traitBadges[0]}, ${traitBadges[1]}, and ${traitBadges[2]}.`;
+}
+
+// Sentence anchoring the user's #1 hobby. Empty string if no hobby answer.
+function anchorHobbyLine(answers) {
+  const anchor = getAnchorHobby(answers);
+  if (!anchor?.hobby) return "";
+  return `Your Sunday goes to ${anchor.hobby.label.toLowerCase()} — that's a real tell.`;
+}
+
+// Build "who you are" paragraph.
+export function buildPersonalNarrative(result, answers) {
+  const tpl = personalNarratives[result.topClass] || "";
+  return tpl
+    .replace("{facets}", facetSentence(result.traitBadges))
+    .replace("{anchorHobbyLine}", anchorHobbyLine(answers))
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+// Build "your D&D character" paragraph.
+export function buildCharacterNarrative(result) {
+  const tpl = characterNarratives[result.topClass] || "";
+  const subPhrase =
+    characterSubclassPhrases[result.topClass]?.[result.topSubclass] || "";
+  let body = tpl.replace("{subclassFlavor}", subPhrase);
+  if (result.isMulticlass && result.secondClass) {
+    body += ` Your second path: ${result.secondClass}. The line between the two is thin enough that you'd actually live in both.`;
+  } else if (result.secondClass && result.secondScore >= result.topScore * 0.75) {
+    body += ` There's also real ${result.secondClass} energy in the mix — a quieter second voice you'd do well to listen to.`;
+  }
+  return body.replace(/\s+/g, " ").trim();
+}
+
+// Build growth/stretch tip object { headline, body }.
+export function getGrowthTip(result) {
+  const tip = growthTips[result.topClass];
+  if (!tip) return { headline: "Stretch toward what's next.", body: "Keep going." };
+  // If subclassAccum has a clear 2nd subclass, mention it.
+  const subs = result.subclassAccum?.[result.topClass] || {};
+  const ranked = Object.entries(subs).sort((a, b) => b[1] - a[1]);
+  const second = ranked[1]?.[0];
+  if (second && second !== result.topSubclass && ranked[1][1] > 0) {
+    return {
+      headline: tip.headline,
+      body: `${tip.body} A natural lean from ${result.topSubclass}: explore ${second}.`,
+    };
+  }
+  return tip;
 }

@@ -5,7 +5,18 @@ import {
   scoreBaseline,
   pickTieBreakers,
   pickSubclassQuestions,
+  getAnchorHobby,
+  getPersonaArchetype,
+  buildPersonalNarrative,
+  buildCharacterNarrative,
+  getGrowthTip,
 } from "./engine_v3.mjs";
+import {
+  personalNarratives,
+  characterNarratives,
+  characterSubclassPhrases,
+  growthTips,
+} from "./classMetadata_v3.mjs";
 
 let failures = 0;
 function assert(cond, msg) {
@@ -126,6 +137,56 @@ for (const cls of CLASSES) {
 assert(baselineQuestions.length === 12, `12 baseline questions (got ${baselineQuestions.length})`);
 assert(tieBreakerPool.length >= 10, `>=10 tie-breakers in pool (got ${tieBreakerPool.length})`);
 assert(HOBBIES.length >= 25, `>=25 hobbies in pool (got ${HOBBIES.length})`);
+
+// 11. Every class has narrative metadata
+for (const cls of CLASSES) {
+  assert(Boolean(personalNarratives[cls]), `${cls} has personalNarratives entry`);
+  assert(Boolean(characterNarratives[cls]), `${cls} has characterNarratives entry`);
+  assert(Boolean(growthTips[cls]?.headline), `${cls} has growthTips.headline`);
+  assert(Boolean(growthTips[cls]?.body), `${cls} has growthTips.body`);
+  assert(Boolean(characterSubclassPhrases[cls]), `${cls} has characterSubclassPhrases entry`);
+}
+
+// 12. Insight helpers behave on a known Wizard-biased answer set
+{
+  const answers = {};
+  for (const q of baselineQuestions) {
+    if (q.type === "rank3") answers[q.id] = { ranked: ["read", "research", "chess"] };
+    else {
+      const idx = q.options.findIndex((o) => (o.scores?.Wizard || 0) >= 3);
+      answers[q.id] = { choice: idx >= 0 ? idx : 0 };
+    }
+  }
+  const r = calculateResult(answers);
+
+  const anchor = getAnchorHobby(answers);
+  assert(anchor?.hobby?.id === "read", `getAnchorHobby returns top-ranked hobby (got ${anchor?.hobby?.id})`);
+
+  const archetype = getPersonaArchetype(r);
+  assert(typeof archetype === "string" && archetype.startsWith("The "), `getPersonaArchetype returns 'The ...' string (got ${archetype})`);
+
+  const personal = buildPersonalNarrative(r, answers);
+  assert(typeof personal === "string" && personal.length > 50, `buildPersonalNarrative returns non-trivial string`);
+  assert(!/\{[a-zA-Z]+\}/.test(personal), `buildPersonalNarrative has no unfilled placeholders (got: ${personal})`);
+
+  const character = buildCharacterNarrative(r);
+  assert(typeof character === "string" && character.length > 50, `buildCharacterNarrative returns non-trivial string`);
+  assert(!/\{[a-zA-Z]+\}/.test(character), `buildCharacterNarrative has no unfilled placeholders (got: ${character})`);
+
+  const tip = getGrowthTip(r);
+  assert(Boolean(tip?.headline) && Boolean(tip?.body), `getGrowthTip returns headline + body`);
+}
+
+// 13. Insight helpers don't break on empty answers
+{
+  const r = calculateResult({});
+  const anchor = getAnchorHobby({});
+  assert(anchor === null, `getAnchorHobby returns null on empty answers (got ${JSON.stringify(anchor)})`);
+  const personal = buildPersonalNarrative(r, {});
+  assert(typeof personal === "string", `buildPersonalNarrative tolerates empty answers`);
+  const character = buildCharacterNarrative(r);
+  assert(typeof character === "string", `buildCharacterNarrative tolerates empty result`);
+}
 
 if (failures > 0) {
   console.error(`\n${failures} test(s) failed.`);
