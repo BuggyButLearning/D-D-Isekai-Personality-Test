@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -219,6 +219,18 @@ export default function DndClassPersonalityTestV3() {
 
   const result = useMemo(() => calculateResult(answers), [answers]);
 
+  const cardRef = useRef(null);
+  const isFirstScrollRender = useRef(true);
+
+  useEffect(() => {
+    if (isFirstScrollRender.current) {
+      isFirstScrollRender.current = false;
+      return;
+    }
+    if (phase === PHASES.INTRO) return;
+    cardRef.current?.scrollIntoView({ behavior: "auto", block: "start" });
+  }, [phase, step]);
+
   const setAnswer = (id, value) => {
     setAnswers((prev) => ({ ...prev, [id]: value }));
   };
@@ -433,6 +445,7 @@ export default function DndClassPersonalityTestV3() {
           </p>
         </header>
 
+        <div ref={cardRef}>
         <Card className="overflow-visible">
           <CardContent className="p-0">
             <div className="pixel-strip border-b-4 p-4 md:p-6">
@@ -766,6 +779,7 @@ export default function DndClassPersonalityTestV3() {
             </div>
           </CardContent>
         </Card>
+        </div>
 
         <p className="mt-6 border-4 border-[#0b0b0b] bg-[#fff2cf] p-3 text-center text-[10px] leading-5 text-[#171717] shadow-[inset_0_0_0_3px_#d85a24,4px_4px_0_#0b0b0b]">
           Built as entertainment and self reflection — not a clinical, hiring, or ability assessment.
