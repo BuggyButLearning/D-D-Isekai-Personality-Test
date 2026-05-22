@@ -228,6 +228,10 @@ export default function DndClassPersonalityTestV3() {
       return;
     }
     if (phase === PHASES.INTRO) return;
+    if (phase === PHASES.RESULT) {
+      window.scrollTo({ top: 0, behavior: "auto" });
+      return;
+    }
     cardRef.current?.scrollIntoView({ behavior: "auto", block: "start" });
   }, [phase, step]);
 
