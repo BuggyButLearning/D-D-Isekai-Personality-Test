@@ -19,15 +19,15 @@ function s(scores, subclassTags = {}, facets = []) {
 
 export const HOBBIES = [
   { id: "cook",       label: "Cooking elaborate meals from scratch",        scores: { Cleric: 2, Artificer: 1 }, subclassTags: { Cleric: { Life: 1 }, Artificer: { Alchemist: 1 } } },
-  { id: "bake",       label: "Baking — precise recipes, consistent results", scores: { Artificer: 2, Cleric: 1 }, subclassTags: { Artificer: { Alchemist: 2 } } },
+  { id: "bake",       label: "Baking. Precise recipes, consistent results.", scores: { Artificer: 2, Cleric: 1 }, subclassTags: { Artificer: { Alchemist: 2 } } },
   { id: "garden",     label: "Gardening, growing food, keeping plants",      scores: { Druid: 4 }, subclassTags: { Druid: { Land: 2 } } },
   { id: "birdwatch",  label: "Birdwatching, foraging, wildlife photography", scores: { Druid: 3, Ranger: 1 }, subclassTags: { Druid: { Land: 1, Moon: 1 } } },
   { id: "hike",       label: "Hiking, backpacking, navigating trails",       scores: { Ranger: 4 }, subclassTags: { Ranger: { Hunter: 1, "Winter Walker": 1 } } },
   { id: "hunt",       label: "Hunting, fishing, tracking",                   scores: { Ranger: 3, Barbarian: 1 }, subclassTags: { Ranger: { Hunter: 2 } } },
   { id: "lift",       label: "Lifting weights, powerlifting, strongman",     scores: { Barbarian: 3, Fighter: 1 }, subclassTags: { Barbarian: { Berserker: 1 }, Fighter: { Champion: 1 } } },
-  { id: "combat",     label: "Full-collision contact sports — boxing, MMA, rugby, hockey", scores: { Barbarian: 2, Fighter: 2 }, subclassTags: { Fighter: { Champion: 1 }, Barbarian: { Berserker: 1 } } },
-  { id: "team_sport", label: "Team sports — football, basketball, soccer, baseball", scores: { Fighter: 3, Paladin: 1, Bard: 1 }, subclassTags: { Fighter: { Banneret: 2, Champion: 1 }, Paladin: { Glory: 1 }, Bard: { Valor: 1 } } },
-  { id: "martial",    label: "Disciplined martial training — kata, drills, technique", scores: { Monk: 4 }, subclassTags: { Monk: { "Open Hand": 2 } } },
+  { id: "combat",     label: "Full contact sports (boxing, MMA, rugby, hockey)", scores: { Barbarian: 2, Fighter: 2 }, subclassTags: { Fighter: { Champion: 1 }, Barbarian: { Berserker: 1 } } },
+  { id: "team_sport", label: "Team sports (football, basketball, soccer, baseball)", scores: { Fighter: 3, Paladin: 1, Bard: 1 }, subclassTags: { Fighter: { Banneret: 2, Champion: 1 }, Paladin: { Glory: 1 }, Bard: { Valor: 1 } } },
+  { id: "martial",    label: "Disciplined martial training (kata, drills, technique)", scores: { Monk: 4 }, subclassTags: { Monk: { "Open Hand": 2 } } },
   { id: "yoga",       label: "Yoga, breathwork, meditation",                 scores: { Monk: 3, Cleric: 1 }, subclassTags: { Monk: { Mercy: 1, "Open Hand": 1 } } },
   { id: "run",        label: "Running, cycling, endurance training",         scores: { Fighter: 2, Ranger: 1, Monk: 1 } },
   { id: "music",      label: "Playing instrument, singing, songwriting",     scores: { Bard: 3, Sorcerer: 1 }, subclassTags: { Bard: { Lore: 1, Valor: 1 } } },
@@ -36,7 +36,7 @@ export const HOBBIES = [
   { id: "host",       label: "Hosting parties, organizing friend groups",    scores: { Bard: 1, Sorcerer: 2, Paladin: 1 }, subclassTags: { Sorcerer: { "Draconic Sorcery": 1 } } },
   { id: "volunteer",  label: "Volunteering, ministry, community service",    scores: { Cleric: 3, Paladin: 1 }, subclassTags: { Cleric: { Life: 1, Light: 1 } } },
   { id: "activism",   label: "Activism, organizing, cause campaigns",        scores: { Paladin: 3, Bard: 1 }, subclassTags: { Paladin: { Devotion: 1, Glory: 1 } } },
-  { id: "read",       label: "Reading deeply — fiction, history, theory",    scores: { Wizard: 3 }, subclassTags: { Wizard: { Diviner: 1, Knowledge: 1 } } },
+  { id: "read",       label: "Reading deeply (fiction, history, theory)",    scores: { Wizard: 3 }, subclassTags: { Wizard: { Diviner: 1, Knowledge: 1 } } },
   { id: "research",   label: "Research projects, writing, journaling",       scores: { Wizard: 3, Monk: 1 }, subclassTags: { Wizard: { Abjurer: 1, Diviner: 1 } } },
   { id: "chess",      label: "Chess, strategy games, complex puzzles",       scores: { Wizard: 2, Rogue: 2 }, subclassTags: { Wizard: { Diviner: 1 }, Rogue: { "Arcane Trickster": 1 } } },
   { id: "code",       label: "Coding, scripting, side software projects",    scores: { Artificer: 2, Wizard: 1 }, subclassTags: { Artificer: { Cartographer: 1, "Battle Smith": 1 } } },
@@ -49,33 +49,33 @@ export const HOBBIES = [
   { id: "invest",     label: "Investing, market analysis, finance",          scores: { Warlock: 2, Wizard: 2 }, subclassTags: { Warlock: { "Fiend Patron": 1 } } },
   { id: "poker",      label: "Poker, high-stakes social games, sales hustle",scores: { Sorcerer: 3, Warlock: 1, Rogue: 1 }, subclassTags: { Sorcerer: { "Draconic Sorcery": 1, "Wild Magic Sorcery": 1 } } },
   { id: "stealth",    label: "Lockpicking, urban exploration, parkour",      scores: { Rogue: 3, Monk: 1 }, subclassTags: { Rogue: { Thief: 2 } } },
-  { id: "collect",    label: "Collecting — vinyl, cards, antiques, rare X",  scores: { Wizard: 1, Warlock: 1 } },
+  { id: "collect",    label: "Collecting (vinyl, cards, antiques, rarities)",  scores: { Wizard: 1, Warlock: 1 } },
   { id: "tabletop",   label: "Tabletop RPGs, D&D, complex board games",      scores: { Wizard: 1, Rogue: 1 } },
-  { id: "videogames", label: "Video games — RPGs, strategy, FPS, sandbox, MMOs", scores: { Wizard: 1, Rogue: 1, Artificer: 1, Fighter: 1 }, subclassTags: { Wizard: { Diviner: 1 }, Artificer: { "Battle Smith": 1 } } },
+  { id: "videogames", label: "Video games (RPGs, strategy, FPS, sandbox, MMOs)", scores: { Wizard: 1, Rogue: 1, Artificer: 1, Fighter: 1 }, subclassTags: { Wizard: { Diviner: 1 }, Artificer: { "Battle Smith": 1 } } },
 ];
 
 // ---------------------------------------------------------------------------
-// BASELINE QUESTIONS (12 — every user sees these)
+// BASELINE QUESTIONS (12, every user sees these)
 // ---------------------------------------------------------------------------
 
 export const baselineQuestions = [
-  // Q1 — Power source via helping a friend (warmup; single-choice)
+  // Q1. Power source via helping a friend (warmup; single-choice)
   {
     id: "help_friend",
     type: "single",
     section: "Power Source",
     text: "A friend says: 'I have a job interview Friday and I'm freaking out.' Your most likely move:",
     options: [
-      { label: "Drill them through 20 mock questions until smooth", ...s({ Fighter: 4, Monk: 1 }, { Fighter: { "Battle Master": 1, Champion: 1 } }, ["Disciplined"]) },
-      { label: "Pull up the company's history, comp model, and recent news so they walk in informed", ...s({ Wizard: 3 }, { Wizard: { Diviner: 1, Knowledge: 1 } }, ["Scholar"]) },
+      { label: "Drill them through 20 mock questions", ...s({ Fighter: 4, Monk: 1 }, { Fighter: { "Battle Master": 1, Champion: 1 } }, ["Disciplined"]) },
+      { label: "Pull the company's history, pay, and recent news so they walk in prepared", ...s({ Wizard: 3 }, { Wizard: { Diviner: 1, Knowledge: 1 } }, ["Scholar"]) },
       { label: "Text three contacts who might know the hiring manager or team", ...s({ Warlock: 4, Bard: 1 }, { Warlock: { "Archfey Patron": 1, "Fiend Patron": 1 } }, ["Connected"]) },
-      { label: "Tell them they've already got it and walk them into confidence", ...s({ Sorcerer: 4, Bard: 1 }, { Sorcerer: { "Draconic Sorcery": 1, "Spellfire Sorcery": 1 } }, ["Natural Presence"]) },
-      { label: "Build them a one-page prep sheet and a question template they can reuse forever", ...s({ Artificer: 3, Wizard: 1 }, { Artificer: { Cartographer: 1, Alchemist: 1 } }, ["Maker"]) },
+      { label: "Tell them they've already got it. Walk them into the room.", ...s({ Sorcerer: 4, Bard: 1 }, { Sorcerer: { "Draconic Sorcery": 1, "Spellfire Sorcery": 1 } }, ["Natural Presence"]) },
+      { label: "Build them a one-page prep sheet and a question template they'll reuse", ...s({ Artificer: 3, Wizard: 1 }, { Artificer: { Cartographer: 1, Alchemist: 1 } }, ["Maker"]) },
       { label: "Listen, ask what's actually scaring them, sit with it before fixing", ...s({ Cleric: 3, Monk: 1, Druid: 1 }, { Cleric: { Life: 1, Light: 1 } }, ["Healer"]) },
     ],
   },
 
-  // Q2 — Learning a new hard skill (warmup; single-choice)
+  // Q2. Learning a new hard skill (warmup; single-choice)
   {
     id: "learn_welding",
     type: "single",
@@ -85,23 +85,23 @@ export const baselineQuestions = [
       { label: "Three books, a YouTube playlist, and notes before I strike an arc", ...s({ Wizard: 3 }, { Wizard: { Knowledge: 1, Abjurer: 1 } }, ["Documented"]) },
       { label: "Sign up for a class with a certified instructor and run the drills", ...s({ Fighter: 3, Paladin: 1, Monk: 1 }, { Fighter: { "Battle Master": 1, Champion: 1 } }, ["Practice Based"]) },
       { label: "Buy a cheap kit, watch one video, start ruining metal Saturday", ...s({ Sorcerer: 3, Rogue: 2 }, { Sorcerer: { "Wild Magic Sorcery": 2 }, Rogue: { Thief: 1 } }, ["Improviser"]) },
-      { label: "Find a welder I respect and ask to apprentice or shadow them", ...s({ Warlock: 4, Cleric: 1 }, { Warlock: { "Celestial Patron": 1, "Fiend Patron": 1 } }, ["Mentor Linked"]) },
+      { label: "Find a welder I respect and ask to shadow them", ...s({ Warlock: 4, Cleric: 1 }, { Warlock: { "Celestial Patron": 1, "Fiend Patron": 1 } }, ["Mentor Linked"]) },
       { label: "Build a jig and a personal checklist after the first burn so it stays fixed", ...s({ Artificer: 3, Fighter: 1 }, { Artificer: { Armorer: 1, "Battle Smith": 1 } }, ["Builder"]) },
       { label: "Practice the same single bead daily until my hand stops shaking", ...s({ Monk: 4, Druid: 1 }, { Monk: { "Open Hand": 2 } }, ["Disciplined"]) },
     ],
   },
 
-  // Q3 — Sunday hobby ranking (rank-3; moved from Q1 so users warm up first)
+  // Q3. Sunday hobby ranking (rank-3; moved from Q1 so users warm up first)
   {
     id: "sunday",
     type: "rank3",
     section: "Life Pattern",
-    text: "What would you actually do with a free Sunday? Pick up to 3 — most likely first.",
+    text: "What would you actually do with a free Sunday? Pick up to 3, most likely first.",
     instruction: "Tap up to 3 in order. Even 1 counts if nothing else really fits.",
     options: HOBBIES, // user picks 1-3, ranks scored x3 / x2 / x1
   },
 
-  // Q4 — Physical mode (merged v2 Q3+Q4)
+  // Q4. Physical mode (merged v2 Q3+Q4)
   {
     id: "physical",
     type: "single",
@@ -111,31 +111,31 @@ export const baselineQuestions = [
       { label: "Martial arts, grappling, or focused movement (yoga, breath, control)", ...s({ Monk: 5 }, { Monk: { "Open Hand": 2, Mercy: 1 } }, ["Body Mind"]) },
       { label: "Heavy lifting, contact sports, or hard physical labor", ...s({ Barbarian: 3, Fighter: 2 }, { Barbarian: { Berserker: 2 }, Fighter: { Champion: 1 } }, ["Power Trained"]) },
       { label: "Hiking, trail running, climbing, outdoor cardio", ...s({ Ranger: 4, Druid: 2 }, { Ranger: { Hunter: 1, "Winter Walker": 1 }, Druid: { Land: 1 } }, ["Fieldcraft"]) },
-      { label: "Gardening, animal care, manual land work outdoors", ...s({ Druid: 4, Ranger: 1 }, { Druid: { Land: 2, Moon: 1 } }, ["Steward"]) },
-      { label: "Structured gym progression, technique sport (climbing, swim, golf)", ...s({ Fighter: 4, Monk: 1 }, { Fighter: { "Battle Master": 1, Champion: 1 } }, ["Measured Growth"]) },
+      { label: "Gardening, animal care, working outdoors with my hands", ...s({ Druid: 4, Ranger: 1 }, { Druid: { Land: 2, Moon: 1 } }, ["Steward"]) },
+      { label: "Structured gym progression, or a technique sport (climbing, swim, golf)", ...s({ Fighter: 4, Monk: 1 }, { Fighter: { "Battle Master": 1, Champion: 1 } }, ["Measured Growth"]) },
       { label: "Dance, performance movement, rhythm-based practice", ...s({ Bard: 4, Monk: 1 }, { Bard: { Dance: 2, Glamour: 1 } }, ["Expressive Movement"]) },
-      { label: "Long walks, casual movement, podcast walks — fitness is steady not focused", ...s({ Wizard: 2, Bard: 1, Druid: 1 }, {}, ["Reflective Mover"]) },
+      { label: "Long walks, casual movement. Fitness is steady, not focused.", ...s({ Wizard: 2, Bard: 1, Druid: 1 }, {}, ["Reflective Mover"]) },
     ],
   },
 
-  // Q5 — Group role (merged v2 Q7+Q8)
+  // Q5. Group role (merged v2 Q7+Q8)
   {
     id: "group_role",
     type: "single",
     section: "Social Mode",
-    text: "You join a group project with 5 people you don't know well. Two weeks in, what role have you slid into?",
+    text: "You join a new group of 5 people. Work team, volunteer crew, band, parent committee, whatever. Two weeks in, what role have you slid into?",
     options: [
-      { label: "The one explaining the work, hyping the room, keeping morale up", ...s({ Bard: 3, Sorcerer: 1, Paladin: 1 }, { Bard: { Valor: 1, Glamour: 1 } }, ["Influencer"]) },
-      { label: "The one calling out when standards slip and pulling people back to the mission", ...s({ Paladin: 5 }, { Paladin: { Devotion: 2, Glory: 1 } }, ["Principled"]) },
+      { label: "The one explaining the work and keeping morale up", ...s({ Bard: 3, Sorcerer: 1, Paladin: 1 }, { Bard: { Valor: 1, Glamour: 1 } }, ["Influencer"]) },
+      { label: "The one calling out when standards slip and pulling people back to the point", ...s({ Paladin: 5 }, { Paladin: { Devotion: 2, Glory: 1 } }, ["Principled"]) },
       { label: "The one checking in privately on whoever seems off", ...s({ Cleric: 4, Druid: 1 }, { Cleric: { Life: 1, Light: 1 } }, ["Healer"]) },
-      { label: "The one quietly watching, noticing what others miss, speaking only when it matters", ...s({ Rogue: 3, Ranger: 2, Druid: 1, Monk: 1 }, { Rogue: { Soulknife: 1, Assassin: 1 }, Ranger: { "Gloom Stalker": 1 } }, ["Observer"]) },
-      { label: "The one setting up the shared doc, template, or tool everyone now relies on", ...s({ Artificer: 3, Fighter: 1 }, { Artificer: { Cartographer: 2, Armorer: 1 } }, ["System Support"]) },
+      { label: "The one watching quietly, speaking only when it matters", ...s({ Rogue: 3, Ranger: 2, Druid: 1, Monk: 1 }, { Rogue: { Soulknife: 1, Assassin: 1 }, Ranger: { "Gloom Stalker": 1 } }, ["Observer"]) },
+      { label: "The one setting up the shared doc, template, or system everyone now relies on", ...s({ Artificer: 3, Fighter: 1 }, { Artificer: { Cartographer: 2, Armorer: 1 } }, ["System Support"]) },
       { label: "The one people end up listening to even though nobody made me the lead", ...s({ Sorcerer: 4, Bard: 1 }, { Sorcerer: { "Draconic Sorcery": 2 }, Bard: { Glamour: 1 } }, ["Natural Presence"]) },
-      { label: "The one running the schedule, assignments, and execution plan", ...s({ Fighter: 4, Paladin: 1 }, { Fighter: { Banneret: 2, "Battle Master": 1 } }, ["Coordinator"]) },
+      { label: "The one running the schedule, the assignments, the plan", ...s({ Fighter: 4, Paladin: 1 }, { Fighter: { Banneret: 2, "Battle Master": 1 } }, ["Coordinator"]) },
     ],
   },
 
-  // Q6 — Half-acre lot (replaces v2 Q9+Q10)
+  // Q6. Half-acre lot (replaces v2 Q9+Q10)
   {
     id: "half_acre",
     type: "single",
@@ -146,13 +146,13 @@ export const baselineQuestions = [
       { label: "Map the trails, learn the local wildlife, set up game cameras", ...s({ Ranger: 5 }, { Ranger: { Hunter: 1, "Gloom Stalker": 1 } }, ["Scout"]) },
       { label: "Build sheds, run irrigation, automate watering and security", ...s({ Artificer: 3, Fighter: 1 }, { Artificer: { Armorer: 1, Cartographer: 1, "Battle Smith": 1 } }, ["Maker"]) },
       { label: "Quiet morning spot to journal, meditate, run a long loop alone", ...s({ Monk: 2, Druid: 2, Wizard: 1 }, { Monk: { "Open Hand": 1, Mercy: 1 }, Druid: { Stars: 1 } }, ["Reflective"]) },
-      { label: "Host events out there — bonfires, retreats, friend weekends", ...s({ Bard: 2, Sorcerer: 2, Paladin: 1 }, { Bard: { Glamour: 1 }, Sorcerer: { "Draconic Sorcery": 1 } }, ["Connector"]) },
-      { label: "Research zoning, value, comps — figure out the optimal play", ...s({ Wizard: 3, Warlock: 2 }, { Wizard: { Diviner: 1 }, Warlock: { "Fiend Patron": 1 } }, ["Strategist"]) },
+      { label: "Host events out there. Bonfires, retreats, friend weekends.", ...s({ Bard: 2, Sorcerer: 2, Paladin: 1 }, { Bard: { Glamour: 1 }, Sorcerer: { "Draconic Sorcery": 1 } }, ["Connector"]) },
+      { label: "Research zoning, value, and comps. Figure out the best move.", ...s({ Wizard: 3, Warlock: 2 }, { Wizard: { Diviner: 1 }, Warlock: { "Fiend Patron": 1 } }, ["Strategist"]) },
       { label: "Hand it to a community group who'll do more good with it than I will", ...s({ Cleric: 2, Paladin: 2, Druid: 2 }, { Cleric: { Life: 1 }, Paladin: { Devotion: 1 }, Druid: { Land: 1 } }, ["Service First"]) },
     ],
   },
 
-  // Q7 — What bothers most (v2 Q12 reframed)
+  // Q7. What bothers most (v2 Q12 reframed)
   {
     id: "bothers",
     type: "single",
@@ -160,49 +160,49 @@ export const baselineQuestions = [
     text: "Scrolling the news. What story makes you actually close the app angry?",
     options: [
       { label: "Someone in power harming people while bystanders do nothing", ...s({ Paladin: 5, Barbarian: 1 }, { Paladin: { Vengeance: 2, Devotion: 1 }, Barbarian: { Zealot: 1 } }, ["Protector"]) },
-      { label: "Vulnerable people suffering without care, support, or community", ...s({ Cleric: 5 }, { Cleric: { Life: 2, Light: 1 } }, ["Compassionate"]) },
+      { label: "Vulnerable people suffering with no one there for them", ...s({ Cleric: 5 }, { Cleric: { Life: 2, Light: 1 } }, ["Compassionate"]) },
       { label: "Ecosystems collapsing, species lost, habitats destroyed", ...s({ Druid: 5 }, { Druid: { Land: 1, Moon: 1, Stars: 1 } }, ["Living Systems Mind"]) },
-      { label: "Misinformation spreading, decisions made on bad data, science ignored", ...s({ Wizard: 3, Cleric: 1 }, { Wizard: { Knowledge: 1, Diviner: 1 } }, ["Truth Seeker"]) },
+      { label: "Lies spreading, decisions made on bad data, science ignored", ...s({ Wizard: 3, Cleric: 1 }, { Wizard: { Knowledge: 1, Diviner: 1 } }, ["Truth Seeker"]) },
       { label: "Avoidable problems repeating because nobody fixed the underlying system", ...s({ Artificer: 3, Wizard: 1, Fighter: 1 }, { Artificer: { Cartographer: 1, Alchemist: 1 } }, ["Automation Mind"]) },
-      { label: "People stuck by rigid rules when a smarter workaround clearly exists", ...s({ Rogue: 4, Bard: 1 }, { Rogue: { Thief: 1, "Arcane Trickster": 1 } }, ["Rule Bender"]) },
+      { label: "People stuck by rigid rules when a smarter workaround exists", ...s({ Rogue: 4, Bard: 1 }, { Rogue: { Thief: 1, "Arcane Trickster": 1 } }, ["Rule Bender"]) },
       { label: "Institutions and gatekeepers blocking access for people who deserve a chance", ...s({ Warlock: 3, Paladin: 1, Bard: 1 }, { Warlock: { "Celestial Patron": 1, "Archfey Patron": 1 } }, ["Access Aware"]) },
     ],
   },
 
-  // Q8 — Plan fails public (v2 Q15)
+  // Q8. Plan fails public (v2 Q15)
   {
     id: "plan_fails",
     type: "single",
     section: "Pressure Scenario",
-    text: "Project demo, day-of, something breaks live in front of leadership. You:",
+    text: "You're presenting something that matters and it breaks live in front of the room. You:",
     options: [
-      { label: "Take the room, give clear next-step instructions, redistribute the load", ...s({ Fighter: 4, Paladin: 1 }, { Fighter: { Banneret: 2, "Battle Master": 1 } }, ["Commander"]) },
+      { label: "Take the room, give clear instructions, redistribute the work", ...s({ Fighter: 4, Paladin: 1 }, { Fighter: { Banneret: 2, "Battle Master": 1 } }, ["Commander"]) },
       { label: "Crack a joke, narrate over the mess, keep energy from collapsing", ...s({ Bard: 3, Sorcerer: 1 }, { Bard: { Glamour: 1, Valor: 1 } }, ["Morale Keeper"]) },
-      { label: "Spot the side-route — different demo path, mock data, anything that gets us through", ...s({ Rogue: 4, Sorcerer: 1 }, { Rogue: { Thief: 1, "Arcane Trickster": 1 } }, ["Improviser"]) },
-      { label: "Open a terminal, patch live, ship a hotfix before the meeting ends", ...s({ Artificer: 3, Wizard: 1 }, { Artificer: { "Battle Smith": 1, Cartographer: 1 } }, ["Patch Builder"]) },
-      { label: "Trust gut, make a bold call — pivot the whole conversation", ...s({ Sorcerer: 3, Barbarian: 3 }, { Sorcerer: { "Wild Magic Sorcery": 1 }, Barbarian: { Berserker: 1 } }, ["Instinctive"]) },
+      { label: "Spot the side route. Different angle, different prop, anything that gets us through.", ...s({ Rogue: 4, Sorcerer: 1 }, { Rogue: { Thief: 1, "Arcane Trickster": 1 } }, ["Improviser"]) },
+      { label: "Patch the broken thing live, before the meeting ends", ...s({ Artificer: 3, Wizard: 1 }, { Artificer: { "Battle Smith": 1, Cartographer: 1 } }, ["Patch Builder"]) },
+      { label: "Trust gut, make a bold call, pivot the whole conversation", ...s({ Sorcerer: 3, Barbarian: 3 }, { Sorcerer: { "Wild Magic Sorcery": 1 }, Barbarian: { Berserker: 1 } }, ["Instinctive"]) },
       { label: "Stay calm, breathe, lower the temperature so everyone else can think again", ...s({ Monk: 3, Cleric: 1, Druid: 1 }, { Monk: { Mercy: 1, "Open Hand": 1 }, Druid: { Stars: 1 } }, ["Calm Under Strain"]) },
     ],
   },
 
-  // Q9 — Limited resources mission (v2 Q16)
+  // Q9. Limited resources mission (v2 Q16)
   {
     id: "limited_mission",
     type: "single",
     section: "Pressure Scenario",
-    text: "Hard project, half the resources you needed, real deadline. Your edge over someone else doing it is:",
+    text: "Hard job, half the resources you needed, real deadline. Your edge over someone else doing it is:",
     options: [
-      { label: "I outlast everyone — I'll take the hits and keep moving when others quit", ...s({ Barbarian: 5 }, { Barbarian: { Berserker: 1, Zealot: 1 } }, ["Grit"]) },
+      { label: "I outlast everyone. I take the hits and keep moving when others quit.", ...s({ Barbarian: 5 }, { Barbarian: { Berserker: 1, Zealot: 1 } }, ["Grit"]) },
       { label: "I prepared. By week two I know more about this problem than anyone else", ...s({ Wizard: 3, Fighter: 1 }, { Wizard: { Diviner: 1, Abjurer: 1 } }, ["Prepared"]) },
-      { label: "I read the terrain, find the path nobody else considered, move alone if needed", ...s({ Ranger: 4, Rogue: 1 }, { Ranger: { Hunter: 1, "Gloom Stalker": 1 } }, ["Scout"]) },
+      { label: "I read the terrain and find the path no one else considered", ...s({ Ranger: 4, Rogue: 1 }, { Ranger: { Hunter: 1, "Gloom Stalker": 1 } }, ["Scout"]) },
       { label: "I know the right people. Calls get made, doors open", ...s({ Warlock: 5 }, { Warlock: { "Fiend Patron": 1, "Archfey Patron": 1 } }, ["Leverage"]) },
-      { label: "I build the tool, template, or pipeline that lets the team punch above weight", ...s({ Artificer: 3, Fighter: 1 }, { Artificer: { Armorer: 1, Cartographer: 1, Artillerist: 1 } }, ["Force Multiplier"]) },
-      { label: "I read what matters to people and get them to commit to the mission", ...s({ Paladin: 4, Sorcerer: 1, Bard: 1 }, { Paladin: { Devotion: 1, Glory: 1 }, Bard: { Valor: 1 } }, ["Cause Led"]) },
-      { label: "I keep the team okay — energy, food, conflict, morale — so they can do the work", ...s({ Cleric: 4, Bard: 1 }, { Cleric: { Life: 1, Light: 1 } }, ["Sustainer"]) },
+      { label: "I build the tool, template, or system that lets the team punch above their weight", ...s({ Artificer: 3, Fighter: 1 }, { Artificer: { Armorer: 1, Cartographer: 1, Artillerist: 1 } }, ["Force Multiplier"]) },
+      { label: "I read what matters to people and get them behind the work", ...s({ Paladin: 4, Sorcerer: 1, Bard: 1 }, { Paladin: { Devotion: 1, Glory: 1 }, Bard: { Valor: 1 } }, ["Cause Led"]) },
+      { label: "I keep the team okay. Energy, food, conflict, morale. So they can do the work.", ...s({ Cleric: 4, Bard: 1 }, { Cleric: { Life: 1, Light: 1 } }, ["Sustainer"]) },
     ],
   },
 
-  // Q10 — Locked door (v2 Q21)
+  // Q10. Locked door (v2 Q21)
   {
     id: "locked_door",
     type: "single",
@@ -218,44 +218,44 @@ export const baselineQuestions = [
     ],
   },
 
-  // Q11 — Recurring breakage (merged v2 Q19+Q20)
+  // Q11. Recurring breakage (merged v2 Q19+Q20)
   {
     id: "recurring_break",
     type: "single",
     section: "Systems and Tools",
-    text: "Same annoying thing keeps breaking — at work, home, in your group. After the third time, you:",
+    text: "Same annoying thing keeps breaking. At work, at home, in your group. After the third time, you:",
     options: [
       { label: "Dig into root cause, document it, understand why it actually fails", ...s({ Wizard: 3 }, { Wizard: { Diviner: 1, Abjurer: 1, Knowledge: 1 } }, ["Root Cause"]) },
-      { label: "Build a fix — script, jig, checklist, automation — so it stops repeating", ...s({ Artificer: 3 }, { Artificer: { Armorer: 1, "Battle Smith": 1, Alchemist: 1 } }, ["Fix Builder"]) },
+      { label: "Build a fix (script, jig, checklist, automation) so it stops repeating", ...s({ Artificer: 3 }, { Artificer: { Armorer: 1, "Battle Smith": 1, Alchemist: 1 } }, ["Fix Builder"]) },
       { label: "Create a process people can follow and train them on it", ...s({ Fighter: 3, Paladin: 2 }, { Fighter: { Banneret: 1, "Battle Master": 1 }, Paladin: { Devotion: 1 } }, ["Process Trainer"]) },
-      { label: "Find the workaround that gets past it right now and ship", ...s({ Rogue: 4 }, { Rogue: { Thief: 1, "Arcane Trickster": 1 } }, ["Workaround Mind"]) },
-      { label: "Escalate to whoever owns it — vendor, manager, platform", ...s({ Warlock: 4, Paladin: 1 }, { Warlock: { "Fiend Patron": 1, "Great Old One Patron": 1 } }, ["Access Solver"]) },
+      { label: "Find the workaround that gets past it right now", ...s({ Rogue: 4 }, { Rogue: { Thief: 1, "Arcane Trickster": 1 } }, ["Workaround Mind"]) },
+      { label: "Escalate to whoever owns it (vendor, manager, platform)", ...s({ Warlock: 4, Paladin: 1 }, { Warlock: { "Fiend Patron": 1, "Great Old One Patron": 1 } }, ["Access Solver"]) },
       { label: "Notice the natural rhythm of when it breaks and adapt around it", ...s({ Druid: 4, Ranger: 1 }, { Druid: { Stars: 2, Land: 1 }, Ranger: { Hunter: 1 } }, ["Pattern Reader"]) },
       { label: "Just absorb it. Some things you push through and stop complaining", ...s({ Barbarian: 4, Monk: 1 }, { Barbarian: { "World Tree": 1, Berserker: 1 }, Monk: { "Open Hand": 1 } }, ["Endurer"]) },
     ],
   },
 
-  // Q12 — Evidence (v2 Q17 reframed)
+  // Q12. Evidence (v2 Q17 reframed)
   {
     id: "evidence",
     type: "single",
     section: "Evidence",
-    text: "Pick the line that fits your actual real-world track record best:",
+    text: "Pick the line that fits your actual track record best:",
     options: [
       { label: "Belts, certifications, trade licenses, military, emergency response, or technical training", ...s({ Fighter: 4, Monk: 2, Paladin: 1 }, { Fighter: { Champion: 1, "Battle Master": 1 }, Monk: { "Open Hand": 1 } }, ["Credentialed"]) },
       { label: "Performances, talks, teaching, music, content, events with audiences", ...s({ Bard: 5 }, { Bard: { Lore: 1, Glamour: 1, Dance: 1, Valor: 1 } }, ["Public Voice"]) },
       { label: "Degrees, research, publications, formal study, analytic work", ...s({ Wizard: 4 }, { Wizard: { Diviner: 1, Abjurer: 1, Knowledge: 1 } }, ["Documented"]) },
-      { label: "Shipped products, code, repairs, builds, labs, devices, working systems", ...s({ Artificer: 3, Wizard: 1 }, { Artificer: { "Battle Smith": 1, Cartographer: 1, Armorer: 1, Artillerist: 1 } }, ["Maker Evidence"]) },
+      { label: "Built products, code, repairs, labs, devices, working systems", ...s({ Artificer: 3, Wizard: 1 }, { Artificer: { "Battle Smith": 1, Cartographer: 1, Armorer: 1, Artillerist: 1 } }, ["Maker Evidence"]) },
       { label: "Ministry, volunteering, care work, activism, community leadership", ...s({ Cleric: 3, Paladin: 3 }, { Cleric: { Life: 1, Light: 1 }, Paladin: { Devotion: 1 } }, ["Service Led"]) },
-      { label: "Field work — conservation, wilderness, scouts, search-and-rescue, ranger work, expedition", ...s({ Ranger: 4, Druid: 2 }, { Ranger: { Hunter: 1, "Winter Walker": 1, "Gloom Stalker": 1 }, Druid: { Land: 1 } }, ["Field Credentialed"]) },
+      { label: "Field work (conservation, wilderness, scouts, search and rescue, ranger work)", ...s({ Ranger: 4, Druid: 2 }, { Ranger: { Hunter: 1, "Winter Walker": 1, "Gloom Stalker": 1 }, Druid: { Land: 1 } }, ["Field Credentialed"]) },
       { label: "Career built mostly through people, mentors, sponsors, or institutions backing me", ...s({ Warlock: 4, Sorcerer: 1 }, { Warlock: { "Fiend Patron": 1, "Celestial Patron": 1, "Archfey Patron": 1 } }, ["Patronage"]) },
-      { label: "Path mostly self-taught, scrappy, opportunistic — I figured it out without much support", ...s({ Sorcerer: 3, Rogue: 3 }, { Rogue: { Thief: 1, Assassin: 1 }, Sorcerer: { "Wild Magic Sorcery": 1, "Draconic Sorcery": 1 } }, ["Self Reliant"]) },
+      { label: "Path mostly self taught, scrappy, opportunistic. I figured it out without much help.", ...s({ Sorcerer: 3, Rogue: 3 }, { Rogue: { Thief: 1, Assassin: 1 }, Sorcerer: { "Wild Magic Sorcery": 1, "Draconic Sorcery": 1 } }, ["Self Reliant"]) },
     ],
   },
 ];
 
 // ---------------------------------------------------------------------------
-// TIE-BREAKER POOL (conditional — fire when top 2 classes close after baseline)
+// TIE-BREAKER POOL (conditional. Fire when top 2 classes close after baseline)
 // Each Q tagged with `pair` = the two classes it differentiates.
 // ---------------------------------------------------------------------------
 
@@ -264,10 +264,10 @@ export const tieBreakerPool = [
     id: "tb_wiz_art",
     pair: ["Wizard", "Artificer"],
     section: "Bonus Round",
-    text: "Coworker keeps shipping bugs. You're the one who actually does something about it. Which?",
+    text: "Someone on the team keeps making the same mistake. You're the one who actually does something. Which?",
     options: [
-      { label: "Write a doc explaining the failure mode so everyone learns it", ...s({ Wizard: 5 }, { Wizard: { Knowledge: 1, Diviner: 1 } }, ["Documented"]) },
-      { label: "Build a linter / pre-commit hook so the bug can't ship again", ...s({ Artificer: 5 }, { Artificer: { Armorer: 1, "Battle Smith": 1 } }, ["Maker"]) },
+      { label: "Write something that explains the failure so everyone learns it", ...s({ Wizard: 5 }, { Wizard: { Knowledge: 1, Diviner: 1 } }, ["Documented"]) },
+      { label: "Build a check that catches it before it can happen again", ...s({ Artificer: 5 }, { Artificer: { Armorer: 1, "Battle Smith": 1 } }, ["Maker"]) },
     ],
   },
   {
@@ -277,7 +277,7 @@ export const tieBreakerPool = [
     text: "Six months into a new combat discipline. What hooked you most?",
     options: [
       { label: "Watching myself climb the ranks and measure improvement", ...s({ Fighter: 5 }, { Fighter: { Champion: 2 } }, ["Measured Growth"]) },
-      { label: "The internal control — breath, calm, becoming harder to rattle", ...s({ Monk: 5 }, { Monk: { "Open Hand": 2, Mercy: 1 } }, ["Self Mastery"]) },
+      { label: "The internal control. Breath, calm, getting harder to rattle.", ...s({ Monk: 5 }, { Monk: { "Open Hand": 2, Mercy: 1 } }, ["Self Mastery"]) },
     ],
   },
   {
@@ -287,7 +287,7 @@ export const tieBreakerPool = [
     text: "Night before a big competition or high-stakes event. You:",
     options: [
       { label: "Run the playbook one more time, sleep on schedule, visualize the reps", ...s({ Fighter: 5 }, { Fighter: { "Battle Master": 2 } }, ["Tactical"]) },
-      { label: "Get hyped, eat, sleep when sleep comes — tomorrow I'll be ready when I'm ready", ...s({ Barbarian: 5 }, { Barbarian: { Berserker: 2 } }, ["Pressure Brave"]) },
+      { label: "Get hyped, eat, sleep when sleep comes. Tomorrow I'll be ready when I'm ready.", ...s({ Barbarian: 5 }, { Barbarian: { Berserker: 2 } }, ["Pressure Brave"]) },
     ],
   },
   {
@@ -307,7 +307,7 @@ export const tieBreakerPool = [
     text: "Local creek polluted from upstream runoff. Most natural response:",
     options: [
       { label: "Walk the watershed, find the source, document where it's coming from", ...s({ Ranger: 5 }, { Ranger: { Hunter: 2, "Gloom Stalker": 1 } }, ["Tracker"]) },
-      { label: "Join or start the restoration group — native plants, water testing, long fix", ...s({ Druid: 5 }, { Druid: { Land: 2, Sea: 1 } }, ["Steward"]) },
+      { label: "Join or start the restoration group (native plants, water testing, long fix)", ...s({ Druid: 5 }, { Druid: { Land: 2, Sea: 1 } }, ["Steward"]) },
     ],
   },
   {
@@ -316,8 +316,8 @@ export const tieBreakerPool = [
     section: "Bonus Round",
     text: "Critical approval blocked by bureaucracy. Deadline is real. You:",
     options: [
-      { label: "Find the workaround inside the rules — different form, technicality, side door", ...s({ Rogue: 5 }, { Rogue: { Thief: 2, "Arcane Trickster": 1 } }, ["Workaround"]) },
-      { label: "Find the exec, vendor, or relationship that can fast-track the whole thing", ...s({ Warlock: 5 }, { Warlock: { "Fiend Patron": 2, "Archfey Patron": 1 } }, ["Leverage"]) },
+      { label: "Find the workaround inside the rules (different form, technicality, side door)", ...s({ Rogue: 5 }, { Rogue: { Thief: 2, "Arcane Trickster": 1 } }, ["Workaround"]) },
+      { label: "Find the person, vendor, or relationship that can fast track the whole thing", ...s({ Warlock: 5 }, { Warlock: { "Fiend Patron": 2, "Archfey Patron": 1 } }, ["Leverage"]) },
     ],
   },
   {
@@ -327,7 +327,7 @@ export const tieBreakerPool = [
     text: "After a presentation, the compliment that lands most is:",
     options: [
       { label: "\"You just have it. People can't look away when you talk.\"", ...s({ Sorcerer: 5 }, { Sorcerer: { "Draconic Sorcery": 2, "Spellfire Sorcery": 1 } }, ["Natural Presence"]) },
-      { label: "\"You're so prepared — your stories, examples, pacing, everything landed.\"", ...s({ Bard: 5 }, { Bard: { Lore: 2, Valor: 1, Glamour: 1 } }, ["Crafted Influence"]) },
+      { label: "\"You're so prepared. Your stories, examples, pacing, everything landed.\"", ...s({ Bard: 5 }, { Bard: { Lore: 2, Valor: 1, Glamour: 1 } }, ["Crafted Influence"]) },
     ],
   },
   {
@@ -347,7 +347,7 @@ export const tieBreakerPool = [
     text: "Stranger gets cornered and harassed in front of you. First instinct, honest:",
     options: [
       { label: "Step in physically between them, regardless of consequences", ...s({ Barbarian: 5, Paladin: 1 }, { Barbarian: { Berserker: 1, "World Tree": 1 } }, ["Pressure Brave"]) },
-      { label: "Step in loudly, name what's happening, call the standard publicly", ...s({ Paladin: 5 }, { Paladin: { Vengeance: 2, Devotion: 1 } }, ["Standard Bearer"]) },
+      { label: "Step in loudly, name what's happening, call it out in front of everyone", ...s({ Paladin: 5 }, { Paladin: { Vengeance: 2, Devotion: 1 } }, ["Standard Bearer"]) },
     ],
   },
   {
@@ -356,8 +356,8 @@ export const tieBreakerPool = [
     section: "Bonus Round",
     text: "You're given a small budget to start something local that helps. You start:",
     options: [
-      { label: "A care program for people — food, mentorship, recovery, support group", ...s({ Cleric: 5 }, { Cleric: { Life: 2, Light: 1 } }, ["Community Healer"]) },
-      { label: "A land project — community garden, urban farm, wildlife corridor, river cleanup", ...s({ Druid: 5 }, { Druid: { Land: 2 } }, ["Land Steward"]) },
+      { label: "A care program for people (food, mentorship, recovery, support group)", ...s({ Cleric: 5 }, { Cleric: { Life: 2, Light: 1 } }, ["Community Healer"]) },
+      { label: "A land project (community garden, urban farm, wildlife corridor, river cleanup)", ...s({ Druid: 5 }, { Druid: { Land: 2 } }, ["Land Steward"]) },
     ],
   },
   {
@@ -366,14 +366,14 @@ export const tieBreakerPool = [
     section: "Bonus Round",
     text: "Recurring problem at work. You can:",
     options: [
-      { label: "Build a real fix — system, automation, repeatable solution — even though it takes 2 weeks", ...s({ Artificer: 5 }, { Artificer: { Cartographer: 1, "Battle Smith": 1 } }, ["Permanent Fix"]) },
-      { label: "Ship a clever workaround today that buys 6 months, move on", ...s({ Rogue: 5 }, { Rogue: { Thief: 2, "Arcane Trickster": 1 } }, ["Smart Hack"]) },
+      { label: "Build a real fix (system, automation, repeatable solution) even though it takes 2 weeks", ...s({ Artificer: 5 }, { Artificer: { Cartographer: 1, "Battle Smith": 1 } }, ["Permanent Fix"]) },
+      { label: "A clever workaround today that buys 6 months. Move on.", ...s({ Rogue: 5 }, { Rogue: { Thief: 2, "Arcane Trickster": 1 } }, ["Smart Hack"]) },
     ],
   },
 ];
 
 // ---------------------------------------------------------------------------
-// SUBCLASS FLAVOR POOL (filtered to top class — fire 1-2 max)
+// SUBCLASS FLAVOR POOL (filtered to top class. Fire 1-2 max)
 // ---------------------------------------------------------------------------
 
 export const subclassFlavorPool = {
@@ -385,7 +385,7 @@ export const subclassFlavorPool = {
       { label: "Protective gear, wearables, defensive systems", ...s({ Artificer: 2 }, { Artificer: { Armorer: 3 } }, ["Protector Build"]) },
       { label: "High-output systems, force, range, scale", ...s({ Artificer: 2 }, { Artificer: { Artillerist: 3 } }, ["Output Build"]) },
       { label: "Robots, companions, automation that does the work", ...s({ Artificer: 2 }, { Artificer: { "Battle Smith": 3 } }, ["Companion Build"]) },
-      { label: "Maps, navigation, mapping unknown spaces or systems", ...s({ Artificer: 2 }, { Artificer: { Cartographer: 3 } }, ["Mapper"]) },
+      { label: "Maps, navigation, charting unknown spaces or systems", ...s({ Artificer: 2 }, { Artificer: { Cartographer: 3 } }, ["Mapper"]) },
     ],
   },
   Barbarian: {
@@ -395,7 +395,7 @@ export const subclassFlavorPool = {
       { label: "Raw direct force, getting through walls others freeze at", ...s({ Barbarian: 2 }, { Barbarian: { Berserker: 3 } }, ["Pure Force"]) },
       { label: "Animal instinct, body-first, wilderness energy", ...s({ Barbarian: 2 }, { Barbarian: { "Wild Heart": 3 } }, ["Instinct Body"]) },
       { label: "Protecting people, holding the boundary, keeping the group safe", ...s({ Barbarian: 2 }, { Barbarian: { "World Tree": 3 } }, ["Boundary Keep"]) },
-      { label: "Mission, loyalty, belief — fury behind a cause", ...s({ Barbarian: 2 }, { Barbarian: { Zealot: 3 } }, ["Cause Fury"]) },
+      { label: "Mission, loyalty, belief. Fury behind a cause.", ...s({ Barbarian: 2 }, { Barbarian: { Zealot: 3 } }, ["Cause Fury"]) },
     ],
   },
   Bard: {
@@ -417,14 +417,14 @@ export const subclassFlavorPool = {
       { label: "Healing, nurture, restoring people", ...s({ Cleric: 2 }, { Cleric: { Life: 3 } }, ["Restorer"]) },
       { label: "Hope, optimism, fighting despair", ...s({ Cleric: 2 }, { Cleric: { Light: 3 } }, ["Light Bearer"]) },
       { label: "Cleverness, subversion, changing how people see it", ...s({ Cleric: 2 }, { Cleric: { Trickery: 3 } }, ["Subverter"]) },
-      { label: "Sacred defense — willing to fight for what's right", ...s({ Cleric: 2 }, { Cleric: { War: 3 } }, ["Sacred Warrior"]) },
+      { label: "Sacred defense. Willing to fight for what's right.", ...s({ Cleric: 2 }, { Cleric: { War: 3 } }, ["Sacred Warrior"]) },
     ],
   },
   Druid: {
     section: "Subclass Forge",
     text: "Your nature connection feels like:",
     options: [
-      { label: "Place — local land, biome, seasons, regional roots", ...s({ Druid: 2 }, { Druid: { Land: 3 } }, ["Place Rooted"]) },
+      { label: "Place. Local land, biome, seasons, regional roots.", ...s({ Druid: 2 }, { Druid: { Land: 3 } }, ["Place Rooted"]) },
       { label: "Animals, instinct, embodiment, transformation", ...s({ Druid: 2 }, { Druid: { Moon: 3 } }, ["Animal Embodied"]) },
       { label: "Water, storms, waves, movement, emotional flow", ...s({ Druid: 2 }, { Druid: { Sea: 3 } }, ["Storm Heart"]) },
       { label: "Sky, patterns, cycles, navigation, cosmic view", ...s({ Druid: 2 }, { Druid: { Stars: 3 } }, ["Pattern Navigator"]) },
@@ -437,7 +437,7 @@ export const subclassFlavorPool = {
       { label: "Team captain, coordinating, lifting the group's performance", ...s({ Fighter: 2 }, { Fighter: { Banneret: 3 } }, ["Team Captain"]) },
       { label: "Tactics, planning, controlled precise skill", ...s({ Fighter: 2 }, { Fighter: { "Battle Master": 3 } }, ["Tactician"]) },
       { label: "Athletic excellence, clean execution, physical dominance", ...s({ Fighter: 2 }, { Fighter: { Champion: 3 } }, ["Competitor"]) },
-      { label: "Trained skill plus deep technical knowledge layered on top", ...s({ Fighter: 2 }, { Fighter: { "Eldritch Knight": 3 } }, ["Trained Scholar"]) },
+      { label: "Trained skill plus deep technical knowledge on top of it", ...s({ Fighter: 2 }, { Fighter: { "Eldritch Knight": 3 } }, ["Trained Scholar"]) },
       { label: "Mental discipline, focus, willpower as weapon", ...s({ Fighter: 2 }, { Fighter: { "Psi Warrior": 3 } }, ["Mental Force"]) },
     ],
   },
@@ -455,11 +455,11 @@ export const subclassFlavorPool = {
     section: "Subclass Forge",
     text: "Your oath energy is closest to:",
     options: [
-      { label: "Law, justice, classic standard-keeping, oath as core identity", ...s({ Paladin: 2 }, { Paladin: { Devotion: 3 } }, ["Devotion"]) },
+      { label: "Law, justice, standards as core identity", ...s({ Paladin: 2 }, { Paladin: { Devotion: 3 } }, ["Devotion"]) },
       { label: "Achievement, victory, ambition, becoming legend", ...s({ Paladin: 2 }, { Paladin: { Glory: 3 } }, ["Glory"]) },
       { label: "Protecting life, joy, hope, light against decay", ...s({ Paladin: 2 }, { Paladin: { Ancients: 3 } }, ["Light Protector"]) },
       { label: "Grand code, elemental style, larger-than-life conviction", ...s({ Paladin: 2 }, { Paladin: { "Noble Genies": 3 } }, ["Grand Oath"]) },
-      { label: "Justice against wrongdoing — refusing to let harm go unanswered", ...s({ Paladin: 2 }, { Paladin: { Vengeance: 3 } }, ["Vengeance"]) },
+      { label: "Justice against wrongdoing. Refusing to let harm go unanswered.", ...s({ Paladin: 2 }, { Paladin: { Vengeance: 3 } }, ["Vengeance"]) },
     ],
   },
   Ranger: {
@@ -469,7 +469,7 @@ export const subclassFlavorPool = {
       { label: "Animal partnership, training, trust with living companions", ...s({ Ranger: 2 }, { Ranger: { "Beast Master": 3 } }, ["Animal Partner"]) },
       { label: "Charm, social wilderness, strange beauty, unusual presence", ...s({ Ranger: 2 }, { Ranger: { "Fey Wanderer": 3 } }, ["Fey Presence"]) },
       { label: "Darkness, ambush, patience, hunting before being seen", ...s({ Ranger: 2 }, { Ranger: { "Gloom Stalker": 3 } }, ["Dark Hunter"]) },
-      { label: "Classic predator — traps, tactics, tracking, hunting focus", ...s({ Ranger: 2 }, { Ranger: { Hunter: 3 } }, ["Hunter"]) },
+      { label: "Classic predator. Traps, tactics, tracking, hunting focus.", ...s({ Ranger: 2 }, { Ranger: { Hunter: 3 } }, ["Hunter"]) },
       { label: "Cold endurance, harsh environments, isolation tolerated", ...s({ Ranger: 2 }, { Ranger: { "Winter Walker": 3 } }, ["Cold Endurance"]) },
     ],
   },
@@ -480,8 +480,8 @@ export const subclassFlavorPool = {
       { label: "Clever misdirection, illusion, technical tricks", ...s({ Rogue: 2 }, { Rogue: { "Arcane Trickster": 3 } }, ["Misdirection"]) },
       { label: "Precision, stealth, patience, decisive action", ...s({ Rogue: 2 }, { Rogue: { Assassin: 3 } }, ["Precision"]) },
       { label: "Intensity, belief-charged, willing to go darker than others", ...s({ Rogue: 2 }, { Rogue: { "Scion of the Three": 3 } }, ["Dark Edge"]) },
-      { label: "Internal precision — mental, quiet, hard to see coming", ...s({ Rogue: 2 }, { Rogue: { Soulknife: 3 } }, ["Mental Edge"]) },
-      { label: "Hands-on access — tools, movement, getting the thing", ...s({ Rogue: 2 }, { Rogue: { Thief: 3 } }, ["Hands On"]) },
+      { label: "Internal precision. Mental, quiet, hard to see coming.", ...s({ Rogue: 2 }, { Rogue: { Soulknife: 3 } }, ["Mental Edge"]) },
+      { label: "Hands on access. Tools, movement, getting the thing.", ...s({ Rogue: 2 }, { Rogue: { Thief: 3 } }, ["Hands On"]) },
     ],
   },
   Sorcerer: {
@@ -510,7 +510,7 @@ export const subclassFlavorPool = {
     text: "Your scholarly style is closest to:",
     options: [
       { label: "Prevention, defense, risk reduction, protective systems", ...s({ Wizard: 2 }, { Wizard: { Abjurer: 3 } }, ["Prevention"]) },
-      { label: "Elegant precision in motion — scholarship plus action", ...s({ Wizard: 2 }, { Wizard: { Bladesinger: 3 } }, ["Elegant Precision"]) },
+      { label: "Elegant precision in motion. Scholarship plus action.", ...s({ Wizard: 2 }, { Wizard: { Bladesinger: 3 } }, ["Elegant Precision"]) },
       { label: "Prediction, pattern reading, forecasting, insight", ...s({ Wizard: 2 }, { Wizard: { Diviner: 3 } }, ["Pattern Reader"]) },
       { label: "Direct high-impact output, focused force", ...s({ Wizard: 2 }, { Wizard: { Evoker: 3 } }, ["High Impact"]) },
       { label: "Perception, framing, illusion, how people construct reality", ...s({ Wizard: 2 }, { Wizard: { Illusionist: 3 } }, ["Reality Framer"]) },
