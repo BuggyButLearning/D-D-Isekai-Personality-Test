@@ -1,7 +1,7 @@
-// v3 Branching engine
-// Scores baseline -> picks tie-breakers -> picks subclass flavor -> final result
+// v4 Branching engine (draft)
+// Scores baseline -> picks tie-breakers -> picks subclass flavor (skip/single/double) -> final result
 
-import { CLASSES, baselineQuestions, tieBreakerPool, subclassFlavorPool, HOBBIES } from "./questions_v3.mjs";
+import { CLASSES, baselineQuestions, tieBreakerPool, subclassFlavorPool, HOBBIES, subclassDifferentiatorPool } from "./questions_v3.mjs";
 
 export function emptyScores() {
   return Object.fromEntries(CLASSES.map((c) => [c, 0]));
@@ -125,6 +125,21 @@ export function pickSubclassQuestions(topClass, secondClass = null) {
   return qs;
 }
 
+// Layer 4b — second-tier subclass differentiator. Fires only when first-pass
+// subclass margin is tight AND tb cap leaves Q budget headroom (max 16 Qs).
+export function pickSubclassDifferentiator(topClass) {
+  if (!subclassDifferentiatorPool[topClass]) return null;
+  return { id: `subclassdiff_${topClass}`, classTarget: topClass, ...subclassDifferentiatorPool[topClass] };
+}
+
+// Pre-flavor subclass margin (from baseline subclassAccum only).
+function preSubclassMargin(subclassAccum, className) {
+  const subs = subclassAccum[className] || {};
+  const sorted = Object.entries(subs).sort((a, b) => b[1] - a[1]);
+  if (sorted.length < 2) return sorted.length === 1 ? sorted[0][1] : 0;
+  return sorted[0][1] - sorted[1][1];
+}
+
 // Apply subclass-flavor answers. They also boost the class score lightly.
 export function applySubclassAnswers(firedQuestions, answers, scores, subclassAccum, facets) {
   for (const q of firedQuestions) {
@@ -137,7 +152,7 @@ export function applySubclassAnswers(firedQuestions, answers, scores, subclassAc
 const MULTICLASS_THRESHOLD = {
   topMin: 15,
   secondMin: 15,
-  secondPctOfTop: 0.78,
+  secondPctOfTop: 0.82,
 };
 
 const MULTICLASS_CANDIDATE_PCT = 0.75;
@@ -193,7 +208,27 @@ export function calculateResult(answers) {
   const topClass = postTbRanked[0][0];
   const secondClass = postTbRanked[1]?.[0];
 
-  const subQs = postTbMc.isMulticlass ? [] : pickSubclassQuestions(topClass);
+  // Layer 4b — conditional subclass firing.
+  //   - Multiclass: 0 subclass Qs (unchanged from v3).
+  //   - Clear class (margin >= 10) AND clear subclass (margin >= 5) baseline: skip subclass Q.
+  //   - Tight subclass margin (<= 1) AND tb headroom (<= 2 tb fires): fire flavor + differentiator.
+  //   - Otherwise: fire flavor only.
+  let subQs = [];
+  if (!postTbMc.isMulticlass) {
+    const classMargin = postTbRanked[0][1] - (postTbRanked[1]?.[1] ?? 0);
+    const subMargin = preSubclassMargin(subclassAccum, topClass);
+    // Skip-when-clear DISABLED: respecting flavor-Q signal matters more than saving 1 Q.
+    // (Empty `if` retained to preserve branching structure for future tuning.)
+    if (false) {
+      // intentionally never true
+    } else if (subMargin <= 0 && tbFired.length <= 1) {
+      subQs = pickSubclassQuestions(topClass);
+      const diff = pickSubclassDifferentiator(topClass);
+      if (diff) subQs.push(diff);
+    } else {
+      subQs = pickSubclassQuestions(topClass);
+    }
+  }
   applySubclassAnswers(subQs, answers, scores, subclassAccum, facets);
 
   // Final ranking. Multiclass decision is locked at the post-tie-breaker step

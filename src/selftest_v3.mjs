@@ -1,11 +1,12 @@
 // v3 self-tests. Run: node src/selftest_v3.mjs
 import { existsSync } from "node:fs";
-import { CLASSES, baselineQuestions, tieBreakerPool, subclassFlavorPool, HOBBIES } from "./questions_v3.mjs";
+import { CLASSES, baselineQuestions, tieBreakerPool, subclassFlavorPool, subclassDifferentiatorPool, HOBBIES } from "./questions_v3.mjs";
 import {
   calculateResult,
   scoreBaseline,
   pickTieBreakers,
   pickSubclassQuestions,
+  pickSubclassDifferentiator,
   getAnchorHobby,
   getPersonaArchetype,
   buildPersonalNarrative,
@@ -270,6 +271,82 @@ for (const cls of CLASSES) {
   let threw4 = false;
   try { decodeSnapshot(`${bogusCompressed}.${bogusChecksum}`); } catch { threw4 = true; }
   assert(threw4, `decodeSnapshot rejects unknown class`);
+}
+
+// ---------------------------------------------------------------------------
+// v4 rebalance invariants (Layer 1/2/3/4)
+// ---------------------------------------------------------------------------
+
+// Every class baseline-scores in >= 9 questions
+for (const cls of CLASSES) {
+  let qCount = 0;
+  for (const q of baselineQuestions) {
+    if (q.type === "rank3") {
+      if (HOBBIES.some((h) => (h.scores?.[cls] || 0) > 0)) qCount++;
+    } else if (q.options.some((o) => (o.scores?.[cls] || 0) > 0)) qCount++;
+  }
+  assert(qCount >= 9, `class ${cls} scores in >= 9 baseline Qs (got ${qCount})`);
+}
+
+// Every defined subclass has >= 1 baseline tag OR differentiator entry
+function baselineTagTotal(cls, sub) {
+  let total = 0;
+  for (const h of HOBBIES) total += h.subclassTags?.[cls]?.[sub] || 0;
+  for (const q of baselineQuestions) {
+    if (q.type === "rank3") continue;
+    for (const o of q.options) total += o.subclassTags?.[cls]?.[sub] || 0;
+  }
+  for (const q of tieBreakerPool) {
+    for (const o of q.options) total += o.subclassTags?.[cls]?.[sub] || 0;
+  }
+  return total;
+}
+for (const cls of CLASSES) {
+  const definedSubs = new Set();
+  if (subclassFlavorPool[cls]) {
+    for (const opt of subclassFlavorPool[cls].options) {
+      for (const s of Object.keys(opt.subclassTags?.[cls] || {})) definedSubs.add(s);
+    }
+  }
+  if (subclassDifferentiatorPool?.[cls]) {
+    for (const opt of subclassDifferentiatorPool[cls].options) {
+      for (const s of Object.keys(opt.subclassTags?.[cls] || {})) definedSubs.add(s);
+    }
+  }
+  for (const sub of definedSubs) {
+    const inDiff = subclassDifferentiatorPool?.[cls]?.options.some((o) => (o.subclassTags?.[cls]?.[sub] || 0) > 0);
+    assert(baselineTagTotal(cls, sub) > 0 || inDiff, `${cls}/${sub} has baseline tag or differentiator entry`);
+  }
+}
+
+// Every class has a differentiator pool entry
+for (const cls of CLASSES) {
+  assert(subclassDifferentiatorPool?.[cls] !== undefined, `subclassDifferentiatorPool has entry for ${cls}`);
+}
+
+// Smoke: max Q per run <= 16 for canonical answer sets
+for (const cls of CLASSES) {
+  const a = {};
+  for (const q of baselineQuestions) {
+    if (q.type === "rank3") {
+      const sorted = [...HOBBIES].sort((x, y) => (y.scores?.[cls] || 0) - (x.scores?.[cls] || 0));
+      a[q.id] = { ranked: sorted.slice(0, 3).map((h) => h.id) };
+    } else {
+      const idx = q.options.findIndex((o) => (o.scores?.[cls] || 0) >= 3);
+      a[q.id] = { choice: idx >= 0 ? idx : 0 };
+    }
+  }
+  for (const q of tieBreakerPool) {
+    const idx = q.options.findIndex((o) => (o.scores?.[cls] || 0) > 0);
+    a[q.id] = { choice: idx >= 0 ? idx : 0 };
+  }
+  for (const c2 of CLASSES) {
+    if (subclassFlavorPool[c2]) a[`subclass_${c2}`] = { choice: 0 };
+    if (subclassDifferentiatorPool?.[c2]) a[`subclassdiff_${c2}`] = { choice: 0 };
+  }
+  const r = calculateResult(a);
+  const total = 12 + r.tbFired.length + r.subQsFired.length;
+  assert(total <= 16, `${cls} smoke run total Q <= 16 (got ${total})`);
 }
 
 if (failures > 0) {

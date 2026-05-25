@@ -27,6 +27,7 @@ import {
   snapshotToResult,
   snapshotToAnswers,
 } from "./src/shareCode.mjs";
+import { trackTestComplete } from "./src/analytics.mjs";
 
 const PHASES = { INTRO: "intro", BASELINE: "baseline", TIEBREAKER: "tiebreaker", SUBCLASS: "subclass", RESULT: "result" };
 
@@ -234,6 +235,15 @@ export default function DndClassPersonalityTestV3() {
     }
     cardRef.current?.scrollIntoView({ behavior: "auto", block: "start" });
   }, [phase, step]);
+
+  const tracked = useRef(false);
+  useEffect(() => {
+    if (phase !== PHASES.RESULT) return;
+    if (sharedSnapshot) return;
+    if (tracked.current) return;
+    tracked.current = true;
+    trackTestComplete({ result, answers });
+  }, [phase, sharedSnapshot, result, answers]);
 
   const setAnswer = (id, value) => {
     setAnswers((prev) => ({ ...prev, [id]: value }));
