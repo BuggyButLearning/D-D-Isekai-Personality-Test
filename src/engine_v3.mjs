@@ -125,7 +125,7 @@ export function pickSubclassQuestions(topClass, secondClass = null) {
   return qs;
 }
 
-// Apply subclass-flavor answers — they also boost the class score lightly.
+// Apply subclass-flavor answers. They also boost the class score lightly.
 export function applySubclassAnswers(firedQuestions, answers, scores, subclassAccum, facets) {
   for (const q of firedQuestions) {
     const ans = answers[q.id];
@@ -227,7 +227,7 @@ export function calculateResult(answers) {
 }
 
 // ---------------------------------------------------------------------------
-// Insight helpers — render-time builders that turn data already in `result`
+// Insight helpers. Render-time builders that turn data already in `result`
 // + `answers` into human-readable narrative pieces for the result page.
 // ---------------------------------------------------------------------------
 
@@ -272,7 +272,7 @@ function facetSentence(traitBadges) {
 function anchorHobbyLine(answers) {
   const anchor = getAnchorHobby(answers);
   if (!anchor?.hobby) return "";
-  return `Your Sunday goes to ${anchor.hobby.label.toLowerCase()} — that's a real tell.`;
+  return `Your Sunday goes to ${anchor.hobby.label.toLowerCase()}. That's a real tell.`;
 }
 
 // Build "who you are" paragraph.
@@ -294,7 +294,7 @@ export function buildCharacterNarrative(result) {
   if (result.isMulticlass && result.secondClass) {
     body += ` Your second path: ${result.secondClass}. The line between the two is thin enough that you'd actually live in both.`;
   } else if (result.secondClass && result.secondScore >= result.topScore * 0.75) {
-    body += ` There's also real ${result.secondClass} energy in the mix — a quieter second voice you'd do well to listen to.`;
+    body += ` There's also real ${result.secondClass} energy in the mix. A quieter second voice you'd do well to listen to.`;
   }
   return body.replace(/\s+/g, " ").trim();
 }

@@ -245,7 +245,7 @@ export default function DndClassPersonalityTestV3() {
       setStep(step + 1);
       return;
     }
-    // End of current queue — transition phase
+    // End of current queue. Transition phase.
     if (phase === PHASES.BASELINE) {
       if (firedTieBreakers.length > 0) {
         setPhase(PHASES.TIEBREAKER);
@@ -445,7 +445,7 @@ export default function DndClassPersonalityTestV3() {
             </div>
           </div>
           <p className="max-w-2xl border-4 border-[#0b0b0b] bg-[#fff2cf] p-4 text-sm leading-6 text-[#171717] shadow-[inset_0_0_0_3px_#d85a24,4px_4px_0_#0b0b0b] md:max-w-sm">
-            Concrete scenarios about how you live, train, build, and lead. Bonus rounds may fire to break ties.
+            Concrete scenarios about how you live, train, build, and lead. Bonus rounds fire if your top two classes are close.
           </p>
         </header>
 
@@ -476,9 +476,9 @@ export default function DndClassPersonalityTestV3() {
                   <div className="mt-5 space-y-4 leading-7 text-[#171717]">
                     <p>
                       This is not a "pick your favorite vibe" quiz. The questions ask about how you actually
-                      live — how you train, learn, lead, build, serve, improvise, and gain power. Your
-                      answers map onto the 13 D&D classes (plus subclasses) the same way real strengths map
-                      onto real archetypes.
+                      live. How you train, learn, lead, build, serve, improvise, and gain power. Your
+                      answers map to the 13 D&D classes (plus subclasses) the same way real strengths map
+                      to real archetypes.
                     </p>
                     <p>
                       About <strong className="text-[#8e2c1a]">12 core questions</strong> for everyone, plus
@@ -488,8 +488,8 @@ export default function DndClassPersonalityTestV3() {
                     </p>
                     <p>
                       At the end you get a class, subclass, persona archetype, a real-world read on who you
-                      are, and a fantasy character version of you. It's meant as self-reflection and
-                      entertainment — not an ability test.
+                      are, and a fantasy character version of you. Self-reflection and entertainment, not an
+                      ability test.
                     </p>
                   </div>
                   <div className="pixel-slot mt-6 p-4 text-xs leading-6 text-[#171717]">
@@ -499,7 +499,7 @@ export default function DndClassPersonalityTestV3() {
                     <ul className="mt-2 list-disc pl-5">
                       <li>Pick what's <em>actually</em> true of you, not what sounds cool.</li>
                       <li>One question is a rank-3 hobby pick. Tap your top 3 in order.</li>
-                      <li>No "I don't" escape hatches — every option says something about someone.</li>
+                      <li>No "I don't" escape hatches. Every option says something about someone.</li>
                     </ul>
                   </div>
                 </motion.div>
@@ -515,7 +515,7 @@ export default function DndClassPersonalityTestV3() {
                     <div className="mb-5 flex items-center gap-3 border-4 border-[#0b0b0b] bg-[#fff2cf] p-3 text-xs font-bold text-[#171717] shadow-[inset_0_0_0_3px_#c7381d,4px_4px_0_#0b0b0b]">
                       <Star className="h-4 w-4 text-[#c7381d]" />
                       <span>
-                        Bonus Round unlocked. Your top two paths are close — these will decide it.
+                        Bonus Round unlocked. Your top two paths are close. These will decide it.
                       </span>
                     </div>
                   )}
@@ -523,7 +523,7 @@ export default function DndClassPersonalityTestV3() {
                     <div className="mb-5 flex items-center gap-3 border-4 border-[#0b0b0b] bg-[#fff2cf] p-3 text-xs font-bold text-[#171717] shadow-[inset_0_0_0_3px_#168a32,4px_4px_0_#0b0b0b]">
                       <Sparkles className="h-4 w-4 text-[#168a32]" />
                       <span>
-                        Subclass Forge — narrowing your specialization within {provisionalResult?.topClass}.
+                        Subclass Forge. Narrowing your specialization within {provisionalResult?.topClass}.
                       </span>
                     </div>
                   )}
@@ -786,7 +786,7 @@ export default function DndClassPersonalityTestV3() {
         </div>
 
         <p className="mt-6 border-4 border-[#0b0b0b] bg-[#fff2cf] p-3 text-center text-[10px] leading-5 text-[#171717] shadow-[inset_0_0_0_3px_#d85a24,4px_4px_0_#0b0b0b]">
-          Built as entertainment and self reflection — not a clinical, hiring, or ability assessment.
+          Built as entertainment and self reflection. Not a clinical, hiring, or ability assessment.
         </p>
         <p className="mt-2 text-center text-[9px] font-bold uppercase tracking-wider text-[#727a78]">
           build {__APP_VERSION__} · {__BUILD_DATE__}

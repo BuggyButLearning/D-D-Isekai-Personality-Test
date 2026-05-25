@@ -123,7 +123,7 @@ for (const cls of CLASSES) {
   );
 }
 
-// 9. Druid can win — feed Druid-heavy answers
+// 9. Druid can win. Feed Druid-heavy answers.
 {
   const answers = {
     sunday: { ranked: ["garden", "birdwatch", "hike"] },
